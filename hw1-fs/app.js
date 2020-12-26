@@ -116,7 +116,7 @@ const moveFilesByGender = (currentFolderPath, newFolderPath, file) => {
 
     fs.rename(path.join(currentFolderPath, file),
               path.join(newFolderPath, file),
-       err => err && console.log(err));
+              err => err && console.log(err));
 }
 
 changeFileLocationByGender(womenFolder);
