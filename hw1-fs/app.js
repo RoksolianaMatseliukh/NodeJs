@@ -3,8 +3,8 @@ const path = require('path');
 
 const {createFolder} = require('./foldersAndFilesCreator');
 
-// createFolder('1800', ['roksi.txt', 'olya.txt']);
-// createFolder('2000', ['lili.txt', 'olena.txt']);
+createFolder('1800', ['roksi.txt', 'olya.txt']);
+createFolder('2000', ['lili.txt', 'olena.txt']);
 
 
 // change file location
@@ -21,6 +21,7 @@ const helperPath = path.join(process.cwd(), 'helper');
 
 // or 2)
 const changeFileLocation1 = (currentFolderPath, newFolderPath) => {
+
     fs.readdir(currentFolderPath,(err, files) => {
         if (err) {
             console.log(err);
@@ -40,7 +41,7 @@ const changeFileLocation1 = (currentFolderPath, newFolderPath) => {
             });
         });
     });
-};
+}
 
 // changeFileLocation1(pathOfFolder1, pathOfFolder2);
 // changeFileLocation1(pathOfFolder2, pathOfFolder1);
@@ -59,7 +60,7 @@ const changeFileLocation2 = () => {
         moveFiles(firstFolderFiles, pathOfFolder1, pathOfFolder2);
         moveFiles(secondFolderFiles, pathOfFolder2, pathOfFolder1);
     });
-};
+}
 
 const getFolderFiles = (path, callback) => {
     fs.readdir(path,(err, files) => {
@@ -76,9 +77,9 @@ const moveFiles = (folderOfFiles, firstFolder, secondFolder) => {
     folderOfFiles.forEach(file => fs.rename(path.join(firstFolder, file),
                                             path.join(secondFolder, file),
                                             err => err && console.log(err)));
-};
+}
 
-changeFileLocation2();
+// changeFileLocation2();
 
 
 
@@ -106,7 +107,7 @@ const changeFileLocationByGender = folderPath => {
             });
         });
     });
-};
+}
 
 const moveFilesByGender = (currentFolderPath, newFolderPath, file) => {
     if (currentFolderPath === newFolderPath) {
@@ -117,7 +118,7 @@ const moveFilesByGender = (currentFolderPath, newFolderPath, file) => {
     fs.rename(path.join(currentFolderPath, file),
               path.join(newFolderPath, file),
               err => err && console.log(err));
-};
+}
 
-changeFileLocationByGender(womenFolder);
-changeFileLocationByGender(menFolder);
+// changeFileLocationByGender(womenFolder);
+// changeFileLocationByGender(menFolder);

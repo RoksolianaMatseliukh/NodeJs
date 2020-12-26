@@ -1,8 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
-
 const expressBar = require('express-handlebars');
+
 const app = express();
 
 app.use(express.json());
