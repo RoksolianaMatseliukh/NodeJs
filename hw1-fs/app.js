@@ -82,7 +82,7 @@ const moveFiles = (folderOfFiles, firstFolder, secondFolder) => {
 
 
 
-//4) (by gender)
+// 4) (by gender)
 const menFolder = path.join(process.cwd(), 'men');
 const womenFolder = path.join(process.cwd(), 'women');
 
