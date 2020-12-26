@@ -9,7 +9,7 @@ const createFolder = (folderName, [fistFileName, secondFileName]) => {
 
         if (err) {
             // console.log(err);
-            // or __dirname
+                            // or __dirname
             fs.mkdir(path.join(process.cwd(), folderName), {recursive: true}, err => err && console.log(err));
 
             createFile(folderName, fistFileName);
