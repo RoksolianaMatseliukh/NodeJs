@@ -1,70 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 
+const {createFolder} = require('./foldersAndFilesCreator');
 
-// create folder
 // createFolder('1800', ['roksi.txt', 'olya.txt']);
 // createFolder('2000', ['lili.txt', 'olena.txt']);
-
-function createFolder(folderName, [fistFileName, secondFileName]) {
-
-    fs.access(path.join(process.cwd(), folderName), (err) => {
-
-        if (err) {
-            // console.log(err);
-                            // or __dirname
-            fs.mkdir(path.join(process.cwd(), folderName), {recursive: true}, err => err && console.log(err));
-
-            createFile(folderName, fistFileName);
-            createFile(folderName, secondFileName);
-
-        } else {
-            fs.readdir(path.join(process.cwd(), folderName),(err, data) => {
-                if (err) {
-                    console.log(err);
-                } else if (data.length) {
-                    console.log(`The folder - ${folderName} already exists and consists of file(s): ${data}.`);
-                } else {
-                    console.log(`The folder - ${folderName} is empty.`);
-                }
-
-                console.log('_______________');
-            });
-
-            createFile(folderName, fistFileName);
-            createFile(folderName, secondFileName);
-        }
-    });
-}
-
-
-// create file
-function createFile(folderName, fileName) {
-
-    fs.access(path.join(process.cwd(), folderName, fileName), (err) => {
-
-        if (err) {
-            // console.log(err);
-            fs.appendFile(path.join(process.cwd(), folderName, fileName),
-                    `the file name is: ${fileName}, exists in the folder: ${folderName}. \n`,
-                    // {flag: 'a'},
-                    err => err && console.log(err));
-
-        } else {
-            fs.readFile(path.join(process.cwd(), folderName, fileName),(err, data) => {
-                if (err) {
-                    console.log(err);
-                } else if (data.toString()) {
-                    console.log(`The file name is - ${fileName}`);
-                    console.log('_______________');
-                } else {
-                    console.log(`The file - ${fileName} is empty.`);
-                }
-            });
-        }
-    });
-}
-
 
 
 // change file location
@@ -96,7 +36,7 @@ const changeFileLocation1 = (currentFolderPath, newFolderPath) => {
 
                 fs.rename(path.join(currentFolderPath, file),
                           path.join(newFolderPath, file),
-                   renameErr => renameErr && console.log(renameErr));
+                          renameErr => renameErr && console.log(renameErr));
             });
         });
     });
@@ -139,12 +79,12 @@ function moveFiles(folderOfFiles, firstFolder, secondFolder) {
 }
 
 
-//3) (by gender)
+//4) (by gender)
 const menFolder = path.join(process.cwd(), 'men');
 const womenFolder = path.join(process.cwd(), 'women');
 
-// changeFileLocationByGender(womenFolder);
-// changeFileLocationByGender(menFolder);
+changeFileLocationByGender(womenFolder);
+changeFileLocationByGender(menFolder);
 
 function changeFileLocationByGender(folderPath) {
     fs.readdir(folderPath,(err, files) => {
