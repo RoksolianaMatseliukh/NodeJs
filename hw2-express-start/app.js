@@ -32,21 +32,13 @@ fs.access(registeredUsersFolderPath, err => {
     }
 });
 
-app.get('/', (req, res) => {
-    res.render('main');
-});
+app.get('/', (req, res) => res.render('main'));
 
-app.get('/registration', (req, res) => {
-    res.render('registration');
-});
+app.get('/registration', (req, res) => res.render('registration'));
 
-app.get('/login', (req, res) => {
-    res.render('login');
-});
+app.get('/login', (req, res) => res.render('login'));
 
-app.get('/user_page', (req, res) => {
-    res.render('user_page', { ...registeredUser});
-});
+app.get('/user_page', (req, res) => res.render('user_page', { ...registeredUser}));
 
 app.post('/registration', (req, res) => {
 
