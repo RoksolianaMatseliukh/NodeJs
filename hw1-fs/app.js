@@ -86,7 +86,7 @@ const moveFiles = (folderOfFiles, firstFolder, secondFolder) => {
 const menFolder = path.join(process.cwd(), 'men');
 const womenFolder = path.join(process.cwd(), 'women');
 
-const changeFileLocationByGender = (folderPath) => {
+const changeFileLocationByGender = folderPath => {
     fs.readdir(folderPath,(err, files) => {
         if (err) {
             console.log(err);
