@@ -21,7 +21,6 @@ const helperPath = path.join(process.cwd(), 'helper');
 
 // or 2)
 const changeFileLocation1 = (currentFolderPath, newFolderPath) => {
-
     fs.readdir(currentFolderPath,(err, files) => {
         if (err) {
             console.log(err);
@@ -74,7 +73,8 @@ const getFolderFiles = (path, callback) => {
 }
 
 const moveFiles = (folderOfFiles, firstFolder, secondFolder) => {
-    folderOfFiles.forEach(file => fs.rename(path.join(firstFolder, file), path.join(secondFolder, file),
+    folderOfFiles.forEach(file => fs.rename(path.join(firstFolder, file),
+                                            path.join(secondFolder, file),
                                             err => err && console.log(err)));
 };
 
