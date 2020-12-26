@@ -32,7 +32,7 @@ const createFolder = (folderName, [fistFileName, secondFileName]) => {
             createFile(folderName, secondFileName);
         }
     });
-}
+};
 
 
 // create file
@@ -60,7 +60,7 @@ const createFile = (folderName, fileName) => {
             });
         }
     });
-}
+};
 
 module.exports = {
     createFolder

@@ -41,7 +41,7 @@ const changeFileLocation1 = (currentFolderPath, newFolderPath) => {
             });
         });
     });
-}
+};
 
 // changeFileLocation1(pathOfFolder1, pathOfFolder2);
 // changeFileLocation1(pathOfFolder2, pathOfFolder1);
@@ -60,7 +60,7 @@ const changeFileLocation2 = () => {
         moveFiles(firstFolderFiles, pathOfFolder1, pathOfFolder2);
         moveFiles(secondFolderFiles, pathOfFolder2, pathOfFolder1);
     });
-}
+};
 
 const getFolderFiles = (path, callback) => {
     fs.readdir(path,(err, files) => {
@@ -76,9 +76,9 @@ const getFolderFiles = (path, callback) => {
 const moveFiles = (folderOfFiles, firstFolder, secondFolder) => {
     folderOfFiles.forEach(file => fs.rename(path.join(firstFolder, file), path.join(secondFolder, file),
                                             err => err && console.log(err)));
-}
+};
 
-// changeFileLocation2();
+changeFileLocation2();
 
 
 
@@ -106,7 +106,7 @@ const changeFileLocationByGender = folderPath => {
             });
         });
     });
-}
+};
 
 const moveFilesByGender = (currentFolderPath, newFolderPath, file) => {
     if (currentFolderPath === newFolderPath) {
@@ -117,7 +117,7 @@ const moveFilesByGender = (currentFolderPath, newFolderPath, file) => {
     fs.rename(path.join(currentFolderPath, file),
               path.join(newFolderPath, file),
               err => err && console.log(err));
-}
+};
 
 changeFileLocationByGender(womenFolder);
 changeFileLocationByGender(menFolder);
