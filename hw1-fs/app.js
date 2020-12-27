@@ -48,7 +48,6 @@ changeFileLocation1(pathOfFolder2, pathOfFolder1);
 
 
 // or 3)
-
 changeFileLocation2();
 
 function changeFileLocation2() {
