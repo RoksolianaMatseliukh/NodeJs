@@ -12,5 +12,12 @@
     <button> <a href="/registration"> registration </a> </button>
     <button> <a href="/login"> login </a> </button>
 
+    <hr>
+    <h3 style="text-align: center"> REGISTERED USERS: </h3>
+    <hr>
+
+    {{#each users}}
+        <p style="text-align: center"> {{this.name}} - {{this.age}} </p>
+    {{/each}}
 </body>
 </html>

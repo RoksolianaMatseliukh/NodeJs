@@ -48,7 +48,10 @@ changeFileLocation1(pathOfFolder2, pathOfFolder1);
 
 
 // or 3)
-const changeFileLocation2 = () => {
+
+changeFileLocation2();
+
+function changeFileLocation2() {
     let firstFolderFiles = [];
     let secondFolderFiles = [];
 
@@ -59,9 +62,9 @@ const changeFileLocation2 = () => {
         moveFiles(firstFolderFiles, pathOfFolder1, pathOfFolder2);
         moveFiles(secondFolderFiles, pathOfFolder2, pathOfFolder1);
     });
-};
+}
 
-const getFolderFiles = (path, callback) => {
+function getFolderFiles(path, callback) {
     fs.readdir(path,(err, files) => {
         if (err) {
             console.log(err);
@@ -70,15 +73,13 @@ const getFolderFiles = (path, callback) => {
 
         callback(null, files);
     });
-};
+}
 
-const moveFiles = (folderOfFiles, firstFolder, secondFolder) => {
+function moveFiles(folderOfFiles, firstFolder, secondFolder) {
     folderOfFiles.forEach(file => fs.rename(path.join(firstFolder, file),
                                             path.join(secondFolder, file),
                                             err => err && console.log(err)));
-};
-
-// changeFileLocation2();
+}
 
 
 
@@ -86,7 +87,10 @@ const moveFiles = (folderOfFiles, firstFolder, secondFolder) => {
 const menFolder = path.join(process.cwd(), 'men');
 const womenFolder = path.join(process.cwd(), 'women');
 
-const changeFileLocationByGender = folderPath => {
+changeFileLocationByGender(womenFolder);
+changeFileLocationByGender(menFolder);
+
+function changeFileLocationByGender(folderPath) {
     fs.readdir(folderPath,(err, files) => {
         if (err) {
             console.log(err);
@@ -106,9 +110,9 @@ const changeFileLocationByGender = folderPath => {
             });
         });
     });
-};
+}
 
-const moveFilesByGender = (currentFolderPath, newFolderPath, file) => {
+function moveFilesByGender(currentFolderPath, newFolderPath, file) {
     if (currentFolderPath === newFolderPath) {
         console.log(`file: ${file} - don't need to be moved`);
         return;
@@ -117,7 +121,4 @@ const moveFilesByGender = (currentFolderPath, newFolderPath, file) => {
     fs.rename(path.join(currentFolderPath, file),
               path.join(newFolderPath, file),
               err => err && console.log(err));
-};
-
-changeFileLocationByGender(womenFolder);
-changeFileLocationByGender(menFolder);
+}

@@ -7,14 +7,15 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'views')));
+app.use(express.static(path.join(process.cwd(), 'views')));
 
 app.set('view engine', '.hbs');
-app.set('views', path.join(__dirname, 'views'));
-
 app.engine('.hbs', expressBar({
     defaultLayout: false
 }));
+
+app.set('views', path.join(process.cwd(), 'views'));
+
 
 let loginMsg = '';
 let registrationMsg = '';
@@ -32,13 +33,20 @@ fs.access(registeredUsersFolderPath, err => {
     }
 });
 
-app.get('/', (req, res) => res.render('main'));
+app.get('/', (req, res) => {
+    const readStream = fs.createReadStream(registeredUsersFilePath);
+    readStream.on('data', chunk => {
+        const users = JSON.parse(chunk.toString());
+
+        res.render('main', {users});
+    });
+});
 
 app.get('/registration', (req, res) => res.render('registration'));
 
 app.get('/login', (req, res) => res.render('login'));
 
-app.get('/user_page', (req, res) => res.render('user_page', { ...registeredUser}));
+app.get('/users/:name', (req, res) => res.render('user_page', { ...registeredUser}));
 
 app.post('/registration', (req, res) => {
 
@@ -58,9 +66,7 @@ app.post('/registration', (req, res) => {
         if (foundUser) {
             registrationMsg = 'user with the same login already exists!';
             loginPermission = false;
-            // res.redirect('/registration');
 
-            //or
             res.render('registration', {registrationMsg, loginPermission, ...req.body, login: ''});
             return;
         }
@@ -73,9 +79,7 @@ app.post('/registration', (req, res) => {
         registrationMsg = 'successful registration, you can login!';
         loginPermission = true;
         registeredUser = req.body;
-        // res.redirect('/registration');
 
-        //or
         res.render('registration', {registrationMsg, loginPermission, ...req.body});
     });
 });
@@ -101,7 +105,8 @@ app.post('/login', (req, res) => {
             return;
         }
 
-        res.render('user_page', { ...foundUser});
+        registeredUser = foundUser;
+        res.redirect(`users/${foundUser.name}`);
     });
 });
 

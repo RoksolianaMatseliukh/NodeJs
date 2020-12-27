@@ -3,7 +3,7 @@ const path = require('path');
 
 
 // create folder
-const createFolder = (folderName, [fistFileName, secondFileName]) => {
+function createFolder(folderName, [fistFileName, secondFileName]) {
     fs.access(path.join(process.cwd(), folderName), (err) => {
 
         if (err) {
@@ -31,11 +31,11 @@ const createFolder = (folderName, [fistFileName, secondFileName]) => {
             createFile(folderName, secondFileName);
         }
     });
-};
+}
 
 
 // create file
-const createFile = (folderName, fileName) => {
+function createFile(folderName, fileName) {
     fs.access(path.join(process.cwd(), folderName, fileName), (err) => {
 
         if (err) {
@@ -58,7 +58,7 @@ const createFile = (folderName, fileName) => {
             });
         }
     });
-};
+}
 
 
 module.exports = {
