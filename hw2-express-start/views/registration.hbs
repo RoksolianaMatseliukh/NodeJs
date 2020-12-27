@@ -31,10 +31,10 @@
 
     <h3> {{registrationMsg}} </h3>
 
-    <button> <a href="/"> back </a> </button>
+    <button> <a style="text-decoration: none" href="/"> back </a> </button>
 
-    {{# if loginPermission}}
-        <button> <a href="/users/{{name}}"> login </a> </button>
+    {{#if loginPermission}}
+        <button> <a style="text-decoration: none" href="/users/{{name}}"> login </a> </button>
     {{/if}}
 
 </body>

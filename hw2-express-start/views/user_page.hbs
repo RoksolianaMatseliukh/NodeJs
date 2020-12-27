@@ -9,12 +9,25 @@
 </head>
 <body>
 
-    <h1> {{name}} </h1>
-    <h3> age: {{age}} </h3>
-    <p> login: {{login}} </p>
-    <p> password: {{password}} </p>
+    {{#if isLoggedIn}}
+        <h1> {{name}} </h1>
+        <h3> age: {{age}} </h3>
+        <p> login: {{login}} </p>
+        <p> password: {{password}} </p>
 
-    <button> <a href="/"> log out </a> </button>
+        <button> <a style="text-decoration: none" href="/login"> log out </a> </button>
+
+        <hr>
+        <h3 style="text-align: center"> REGISTERED USERS: </h3>
+        <hr>
+
+        {{#each users}}
+            <p style="text-align: center"> {{this.name}} - {{this.age}} </p>
+        {{/each}}
+
+        {{else}}
+            <h3 style="color: darkred"> you are not logged in </h3>
+    {{/if}}
 
 </body>
 </html>

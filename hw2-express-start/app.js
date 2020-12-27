@@ -17,11 +17,6 @@ app.engine('.hbs', expressBar({
 app.set('views', path.join(process.cwd(), 'views'));
 
 
-let loginMsg = '';
-let registrationMsg = '';
-let loginPermission = false;
-let registeredUser = {};
-
 const registeredUsersFolderPath = path.join(process.cwd(), 'data');
 const registeredUsersFilePath = path.join(registeredUsersFolderPath, 'users.json');
 
@@ -33,28 +28,36 @@ fs.access(registeredUsersFolderPath, err => {
     }
 });
 
-app.get('/', (req, res) => {
+
+let isLoggedIn = false;
+let error = '';
+let registeredUser = {};
+
+app.get('/', (req, res) => res.render('main'));
+
+app.get('/registration', (req, res) => res.render('registration'));
+
+app.get('/login', (req, res) => {
+    isLoggedIn = false;
+    res.render('login');
+});
+
+app.get('/error', (req, res) => res.render('error', {error}));
+
+app.get('/users/:name', (req, res) => {
     const readStream = fs.createReadStream(registeredUsersFilePath);
     readStream.on('data', chunk => {
         const users = JSON.parse(chunk.toString());
 
-        res.render('main', {users});
+        res.render('user_page', {isLoggedIn, ...registeredUser, users});
     });
 });
 
-app.get('/registration', (req, res) => res.render('registration'));
-
-app.get('/login', (req, res) => res.render('login'));
-
-app.get('/users/:name', (req, res) => res.render('user_page', { ...registeredUser}));
-
 app.post('/registration', (req, res) => {
-
     const {name, age, login, password} = req.body;
+
     if (!name || !age || !login || !password) {
-        registrationMsg = 'fill all fields!';
-        loginPermission = false;
-        res.render('registration', {registrationMsg, loginPermission, ...req.body});
+        res.render('registration', {registrationMsg: 'fill all fields!', loginPermission: false, ...req.body});
         return;
     }
 
@@ -64,10 +67,8 @@ app.post('/registration', (req, res) => {
         const foundUser = users.find(user => user.login === login);
 
         if (foundUser) {
-            registrationMsg = 'user with the same login already exists!';
-            loginPermission = false;
-
-            res.render('registration', {registrationMsg, loginPermission, ...req.body, login: ''});
+            error = 'user with the same login already exists!';
+            res.redirect('/error');
             return;
         }
 
@@ -76,21 +77,17 @@ app.post('/registration', (req, res) => {
         const writeUsers = fs.createWriteStream(registeredUsersFilePath);
         writeUsers.write(JSON.stringify(users));
 
-        registrationMsg = 'successful registration, you can login!';
-        loginPermission = true;
+        isLoggedIn = true;
         registeredUser = req.body;
-
-        res.render('registration', {registrationMsg, loginPermission, ...req.body});
+        res.render('registration', {registrationMsg: 'successful registration, you can login!', loginPermission: true, ...req.body});
     });
 });
 
 app.post('/login', (req, res) => {
-
     const {login, password} = req.body;
 
     if (!login || !password) {
-        loginMsg = 'fill all fields!';
-        res.render('login', {loginMsg, ...req.body});
+        res.render('login', {loginMsg: 'fill all fields!', ...req.body});
         return;
     }
 
@@ -100,14 +97,21 @@ app.post('/login', (req, res) => {
         const foundUser = users.find(user => user.login === login && user.password === password);
 
         if (!foundUser) {
-            loginMsg = 'no user with this login or password';
-            res.render('login', {loginMsg})
+            error = 'no user with this login and password';
+            res.redirect('/error');
             return;
+
         }
 
+        isLoggedIn = true;
         registeredUser = foundUser;
-        res.redirect(`users/${foundUser.name}`);
+        res.redirect(`/users/${foundUser.name}`);
     });
+});
+
+app.get('*', (req, res) => {
+    error = 'error 404, page not found';
+    res.render('error', {error});
 });
 
 
