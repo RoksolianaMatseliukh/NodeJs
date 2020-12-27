@@ -16,18 +16,16 @@ app.engine('.hbs', expressBar({
 
 app.set('views', path.join(process.cwd(), 'views'));
 
-
 const registeredUsersFolderPath = path.join(process.cwd(), 'data');
 const registeredUsersFilePath = path.join(registeredUsersFolderPath, 'users.json');
 
-fs.access(registeredUsersFolderPath, err => {
+fs.access(registeredUsersFolderPath, (err) => {
     if (err) {
-        fs.mkdir(registeredUsersFolderPath, err => err && console.log(err));
+        fs.mkdir(registeredUsersFolderPath, (mkdirErr) => mkdirErr && console.log(mkdirErr));
         const writeUsers = fs.createWriteStream(registeredUsersFilePath);
         writeUsers.write(JSON.stringify([]));
     }
 });
-
 
 let isLoggedIn = false;
 let error = '';
@@ -42,29 +40,34 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
-app.get('/error', (req, res) => res.render('error', {error}));
+app.get('/error', (req, res) => res.render('error', { error }));
 
 app.get('/users/:name', (req, res) => {
     const readStream = fs.createReadStream(registeredUsersFilePath);
-    readStream.on('data', chunk => {
+    readStream.on('data', (chunk) => {
         const users = JSON.parse(chunk.toString());
 
-        res.render('user_page', {isLoggedIn, ...registeredUser, users});
+        res.render('user_page', { isLoggedIn, ...registeredUser, users });
     });
 });
 
 app.post('/registration', (req, res) => {
-    const {name, age, login, password} = req.body;
+    const {
+        name,
+        age,
+        login,
+        password
+    } = req.body;
 
     if (!name || !age || !login || !password) {
-        res.render('registration', {registrationMsg: 'fill all fields!', loginPermission: false, ...req.body});
+        res.render('registration', { registrationMsg: 'fill all fields!', loginPermission: false, ...req.body });
         return;
     }
 
     const readStream = fs.createReadStream(registeredUsersFilePath);
-    readStream.on('data', chunk => {
+    readStream.on('data', (chunk) => {
         const users = JSON.parse(chunk.toString());
-        const foundUser = users.find(user => user.login === login);
+        const foundUser = users.find((user) => user.login === login);
 
         if (foundUser) {
             error = 'user with the same login already exists!';
@@ -79,22 +82,26 @@ app.post('/registration', (req, res) => {
 
         isLoggedIn = true;
         registeredUser = req.body;
-        res.render('registration', {registrationMsg: 'successful registration, you can login!', loginPermission: true, ...req.body});
+        res.render('registration', {
+            registrationMsg: 'successful registration, you can login!',
+            loginPermission: true,
+            ...req.body
+        });
     });
 });
 
 app.post('/login', (req, res) => {
-    const {login, password} = req.body;
+    const { login, password } = req.body;
 
     if (!login || !password) {
-        res.render('login', {loginMsg: 'fill all fields!', ...req.body});
+        res.render('login', { loginMsg: 'fill all fields!', ...req.body });
         return;
     }
 
     const readStream = fs.createReadStream(registeredUsersFilePath);
-    readStream.on('data', chunk => {
+    readStream.on('data', (chunk) => {
         const users = JSON.parse(chunk.toString());
-        const foundUser = users.find(user => user.login === login && user.password === password);
+        const foundUser = users.find((user) => user.login === login && user.password === password);
 
         if (!foundUser) {
             error = 'no user with this login and password';
@@ -110,8 +117,7 @@ app.post('/login', (req, res) => {
 
 app.get('*', (req, res) => {
     error = 'error 404, page not found';
-    res.render('error', {error});
+    res.render('error', { error });
 });
 
-
-app.listen(5000, err => err ? console.log(err) : console.log('app 5000 in process'));
+app.listen(5000, (err) => (err ? console.log(err) : console.log('app 5000 in process')));
