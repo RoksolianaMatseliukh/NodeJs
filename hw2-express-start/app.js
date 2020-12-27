@@ -100,7 +100,6 @@ app.post('/login', (req, res) => {
             error = 'no user with this login and password';
             res.redirect('/error');
             return;
-
         }
 
         isLoggedIn = true;
