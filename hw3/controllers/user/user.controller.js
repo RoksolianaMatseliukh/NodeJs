@@ -32,6 +32,7 @@ module.exports = {
             const { email } = req.params;
             userService.deleteUserByEmail(email);
             res.status(204);
+            res.end();
         } catch (e) {
             res.json(e.message);
         }
