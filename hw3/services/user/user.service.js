@@ -16,6 +16,5 @@ module.exports = {
     editUserByEmail: (email, editedUser) => {
         const index = dataBase.findIndex((user) => user.email === email);
         dataBase[index] = editedUser;
-    },
-
+    }
 };
