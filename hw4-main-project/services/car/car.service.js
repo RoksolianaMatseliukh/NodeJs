@@ -1,7 +1,7 @@
 const { Sequelize: { literal } } = require('sequelize');
 
 const db = require('../../dataBase').getInstance();
-const { modelNamesEnum: { CAR }, dataBaseEnum: { USER_ID } } = require('../../constants');
+const { dataBaseEnum: { USER_ID }, modelNamesEnum: { CAR } } = require('../../constants');
 
 module.exports = {
     getCars: () => {

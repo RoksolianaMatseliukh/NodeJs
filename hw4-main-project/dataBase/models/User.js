@@ -1,4 +1,4 @@
-const { tableNamesEnum: { USERS }, modelNamesEnum: { USER }, dataBaseEnum: { USER_ID } } = require('../../constants');
+const { dataBaseEnum: { USER_ID }, modelNamesEnum: { USER }, tableNamesEnum: { USERS } } = require('../../constants');
 
 module.exports = (client, DataTypes) => {
     const User = client.define(

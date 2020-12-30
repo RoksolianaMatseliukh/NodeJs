@@ -1,4 +1,4 @@
 module.exports = {
-    USER: 'User',
-    CAR: 'Car'
+    CAR: 'Car',
+    USER: 'User'
 };
