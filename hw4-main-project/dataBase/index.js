@@ -4,7 +4,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 const {
     dataBaseEnum: {
-        AUTO_SHOP, LOCALHOST, MYSQL, USER, PASSWORD
+        AUTO_SHOP, LOCALHOST, MYSQL, PASSWORD, USER
     }
 } = require('../constants');
 
