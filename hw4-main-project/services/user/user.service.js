@@ -50,12 +50,7 @@ module.exports = {
     },
 
     deleteUserById: async (id) => {
-        const CarModel = db.getModel(CAR);
         const UserModel = db.getModel(USER);
-
-        await CarModel.destroy({
-            where: { user_id: id }
-        });
 
         await UserModel.destroy({
             where: { id }

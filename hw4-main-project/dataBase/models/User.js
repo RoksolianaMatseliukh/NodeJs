@@ -39,7 +39,7 @@ module.exports = (client, DataTypes) => {
 
     const Car = require('./Car')(client, DataTypes);
 
-    User.hasOne(Car, { foreignKey: USER_ID });
+    User.hasOne(Car, { foreignKey: USER_ID, onDelete: 'cascade' });
 
     return User;
 };
