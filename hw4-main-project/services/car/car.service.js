@@ -13,7 +13,7 @@ module.exports = {
     getCarByUserId: (user_id) => {
         const CarModel = db.getModel(CAR);
 
-        return CarModel.find({ where: { user_id } });
+        return CarModel.findOne({ where: { user_id } });
     },
 
     createCar: (car) => {
