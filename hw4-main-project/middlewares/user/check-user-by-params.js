@@ -1,4 +1,4 @@
-const { ErrorHandler, errors: { NOT_VALID_ID, ENTITY_NOT_FOUND } } = require('../../error');
+const { ErrorHandler, customErrors: { NOT_VALID_ID, ENTITY_NOT_FOUND } } = require('../../errors');
 const { userService } = require('../../services');
 
 module.exports = async (req, res, next) => {

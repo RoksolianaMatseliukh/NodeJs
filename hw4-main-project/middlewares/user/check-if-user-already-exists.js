@@ -1,4 +1,4 @@
-const { ErrorHandler, errors: { EMAIL_ALREADY_EXISTS } } = require('../../error');
+const { ErrorHandler, customErrors: { EMAIL_ALREADY_EXISTS } } = require('../../errors');
 const { userService } = require('../../services');
 
 module.exports = async (req, res, next) => {

@@ -1,4 +1,4 @@
 module.exports = {
     ErrorHandler: require('./ErrorHandler'),
-    errors: require('./errors')
+    customErrors: require('./custom-errors')
 };

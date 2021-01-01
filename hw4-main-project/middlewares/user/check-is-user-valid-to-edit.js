@@ -1,4 +1,4 @@
-const { ErrorHandler, errors: { NOT_VALID_BODY } } = require('../../error');
+const { ErrorHandler, customErrors: { NOT_VALID_BODY } } = require('../../errors');
 
 module.exports = (req, res, next) => {
     try {
