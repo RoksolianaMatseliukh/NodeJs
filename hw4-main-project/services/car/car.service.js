@@ -10,15 +10,9 @@ module.exports = {
         return CarModel.findAll({ order: literal(USER_ID) });
     },
 
-    getCarByUserId: (user_id) => {
+    createCar: async (car) => {
         const CarModel = db.getModel(CAR);
 
-        return CarModel.findOne({ where: { user_id } });
-    },
-
-    createCar: (car) => {
-        const CarModel = db.getModel(CAR);
-
-        return CarModel.create(car);
+        await CarModel.create(car);
     }
 };

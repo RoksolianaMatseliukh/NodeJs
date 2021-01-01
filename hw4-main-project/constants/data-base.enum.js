@@ -5,6 +5,9 @@ module.exports = {
     PASSWORD: 'password',
     USER: 'root',
 
+    // reference key
+    ID: 'id',
+
     // foreignKey
     USER_ID: 'user_id'
 };

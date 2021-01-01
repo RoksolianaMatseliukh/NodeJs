@@ -1,48 +1,57 @@
+const {
+    statusCodesEnum: { CREATED, NO_CONTENT, OK },
+    statusMessagesEnum: { ENTITY_EDITED, ENTITY_CREATED }
+} = require('../../constants');
 const { userService } = require('../../services');
 
 module.exports = {
-    getUsersWithCars: (req, res) => {
+    getUsersWithCars: (req, res, next) => {
         try {
-            res.status(200).json(req.message || req.users);
+            res.status(OK).json(req.message || req.users);
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     },
 
-    getUserById: (req, res) => {
+    getUserById: (req, res, next) => {
         try {
-            res.status(200).json(req.user);
+            res.status(OK).json(req.user);
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     },
 
-    createUser: async (req, res) => {
+    createUser: async (req, res, next) => {
         try {
             await userService.createUser(req.body);
-            res.status(201).json('user has been created');
+
+            res.status(CREATED).json(ENTITY_CREATED);
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     },
 
-    deleteUserById: async (req, res) => {
+    deleteUserById: async (req, res, next) => {
         try {
-            const { id } = req.params;
-            await userService.deleteUserById(id);
-            res.status(204).end();
+            const { userId } = req.params;
+
+            await userService.deleteUserById(userId);
+
+            res.sendStatus(NO_CONTENT);
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     },
 
-    editUserById: async (req, res) => {
+    editUserById: async (req, res, next) => {
         try {
-            const { id } = req.params;
-            await userService.editUserById(id, req.body);
-            res.status(201).json('user has been edited');
+            const { userId } = req.params;
+
+            await userService.editUserById(userId, req.body);
+
+            res.status(CREATED).json(ENTITY_EDITED);
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     }
 };

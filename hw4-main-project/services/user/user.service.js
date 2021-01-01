@@ -1,17 +1,10 @@
-const { Sequelize: { Op, literal } } = require('sequelize');
+const { Sequelize: { literal } } = require('sequelize');
 
 const db = require('../../dataBase').getInstance();
 const { modelNamesEnum: { CAR, USER } } = require('../../constants');
 
 module.exports = {
-    getUsersWithCars: () => {
-        const UserModel = db.getModel(USER);
-        const CarModel = db.getModel(CAR);
-
-        return UserModel.findAll({ include: CarModel });
-    },
-
-    getFilteredUsersByName: (query) => {
+    getUsers: (queries, offset, limit) => {
         const UserModel = db.getModel(USER);
         const CarModel = db.getModel(CAR);
 
@@ -21,32 +14,32 @@ module.exports = {
                 'age',
                 'email'
             ],
-            where: {
-                name: {
-                    [Op.substring]: query
-                }
+            where: queries,
+            include: {
+                model: CarModel,
+                attributes: [
+                    'model',
+                    'price',
+                    'year'
+                ]
             },
-            include: CarModel,
-            order: literal('age DESC')
+            order: literal('age DESC'),
+            offset,
+            limit
         });
     },
 
     getUserById: (id) => {
         const UserModel = db.getModel(USER);
+        const CarModel = db.getModel(CAR);
 
-        return UserModel.findByPk(id);
+        return UserModel.findByPk(id, { include: CarModel });
     },
 
-    getUserByEmail: (email) => {
+    createUser: async (user) => {
         const UserModel = db.getModel(USER);
 
-        return UserModel.findOne({ where: { email } });
-    },
-
-    createUser: (user) => {
-        const UserModel = db.getModel(USER);
-
-        return UserModel.create(user);
+        await UserModel.create(user);
     },
 
     deleteUserById: async (id) => {
@@ -64,5 +57,11 @@ module.exports = {
             { ...editedUser },
             { where: { id } }
         );
+    },
+
+    getNumberOfUsers: () => {
+        const UserModel = db.getModel(USER);
+
+        return UserModel.count();
     }
 };

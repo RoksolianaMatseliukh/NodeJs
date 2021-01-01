@@ -7,7 +7,8 @@ module.exports = (client, DataTypes) => {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
-                autoIncrement: true
+                autoIncrement: true,
+                allowNull: false
             },
 
             model: {
@@ -16,7 +17,7 @@ module.exports = (client, DataTypes) => {
             },
 
             price: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.DECIMAL,
                 allowNull: false
             },
 

@@ -25,7 +25,7 @@ module.exports = {
         ],
         'arrow-body-style': 'error',
         'block-scoped-var': 'error',
-        complexity: 'error',
+        complexity: 'warn',
         'constructor-super': 'error',
         camelcase: 'off',
         curly: 'error',

@@ -7,7 +7,8 @@ module.exports = (client, DataTypes) => {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
-                autoIncrement: true
+                autoIncrement: true,
+                allowNull: false
             },
 
             name: {
@@ -39,7 +40,11 @@ module.exports = (client, DataTypes) => {
 
     const Car = require('./Car')(client, DataTypes);
 
-    User.hasOne(Car, { foreignKey: USER_ID, onDelete: 'cascade' });
+    User.hasMany(Car, {
+        foreignKey: USER_ID,
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
+    });
 
     return User;
 };

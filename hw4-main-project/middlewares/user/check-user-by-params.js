@@ -1,22 +1,23 @@
+const { ErrorHandler, errors: { NOT_VALID_ID, ENTITY_NOT_FOUND } } = require('../../error');
 const { userService } = require('../../services');
 
 module.exports = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { userId } = req.params;
 
-        if (id <= 0 || !Number.isInteger(+id)) {
-            throw new Error('id must be greater than zero and consist only of numbers');
+        if (userId <= 0 || !Number.isInteger(+userId)) {
+            throw new ErrorHandler(NOT_VALID_ID.message, NOT_VALID_ID.code);
         }
 
-        const foundUser = await userService.getUserById(id);
+        const foundUser = await userService.getUserById(userId);
 
         if (!foundUser) {
-            throw new Error(`user with id: ${id} doesn't exists`);
+            throw new ErrorHandler(ENTITY_NOT_FOUND.message, ENTITY_NOT_FOUND.code);
         }
 
         req.user = foundUser;
         next();
     } catch (e) {
-        res.status(404).json(e.message);
+        next(e);
     }
 };
