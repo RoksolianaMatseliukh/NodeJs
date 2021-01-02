@@ -12,7 +12,7 @@ module.exports = {
             where: queries,
             include: {
                 model: CarModel,
-                attributes: { exclude: ['user_id'] }
+                attributes: { exclude: 'user_id' }
             },
             order: literal('age DESC'),
             offset,
