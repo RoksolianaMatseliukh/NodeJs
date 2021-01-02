@@ -1,7 +1,7 @@
 const { Sequelize: { literal } } = require('sequelize');
 
 const db = require('../../dataBase').getInstance();
-const { modelNamesEnum: { CAR, USER } } = require('../../constants');
+const { dataBaseEnum: { USER_ID }, modelNamesEnum: { CAR, USER } } = require('../../constants');
 
 module.exports = {
     getUsers: (queries, offset, limit) => {
@@ -12,7 +12,7 @@ module.exports = {
             where: queries,
             include: {
                 model: CarModel,
-                attributes: { exclude: 'user_id' }
+                attributes: { exclude: USER_ID }
             },
             order: literal('age DESC'),
             offset,
