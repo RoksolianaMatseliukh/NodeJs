@@ -1,3 +1,3 @@
 module.exports = {
-    numericalValueValidator: require('./numericalValue.validator')
+    numericalFieldValidator: require('./numerical-field.validator')
 };

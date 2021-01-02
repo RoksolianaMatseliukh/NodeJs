@@ -1,4 +1,4 @@
-const { commonValidators: { numericalValueValidator } } = require('../../validators');
+const { commonValidators: { numericalFieldValidator } } = require('../../validators');
 const { ErrorHandler, customErrors: { ENTITY_NOT_FOUND } } = require('../../errors');
 const { userService } = require('../../services');
 const { statusCodesEnum: { BAD_REQUEST } } = require('../../constants');
@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
     try {
         const { userId } = req.params;
 
-        const { error } = numericalValueValidator.validate(+userId);
+        const { error } = numericalFieldValidator.validate(+userId);
 
         if (error) {
             const [{ message }] = error.details;

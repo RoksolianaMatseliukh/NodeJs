@@ -1,5 +1,5 @@
 const {
-    commonValidators: { numericalValueValidator },
+    commonValidators: { numericalFieldValidator },
     userValidators: { optionalUserFieldsValidator }
 } = require('../../validators');
 const { statusMessagesEnum: { NO_ENTITY_FOUND } } = require('../../constants');
@@ -10,8 +10,8 @@ module.exports = async (req, res, next) => {
         // eslint-disable-next-line prefer-const
         let { page, limit, ...queries } = req.query;
 
-        const { error: pageErr } = numericalValueValidator.validate(+page);
-        const { error: limitErr } = numericalValueValidator.validate(+limit);
+        const { error: pageErr } = numericalFieldValidator.validate(+page);
+        const { error: limitErr } = numericalFieldValidator.validate(+limit);
         const { error } = optionalUserFieldsValidator.validate(queries);
 
         if (pageErr) {
