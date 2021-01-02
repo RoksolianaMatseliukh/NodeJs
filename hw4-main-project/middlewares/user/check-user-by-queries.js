@@ -1,4 +1,7 @@
-const { commonValidators: { numberValidator }, userValidators: { optionalUserFieldsValidator } } = require('../../validators');
+const {
+    commonValidators: { numericalValueValidator },
+    userValidators: { optionalUserFieldsValidator }
+} = require('../../validators');
 const { statusMessagesEnum: { NO_ENTITY_FOUND } } = require('../../constants');
 const { userService } = require('../../services');
 
@@ -7,8 +10,8 @@ module.exports = async (req, res, next) => {
         // eslint-disable-next-line prefer-const
         let { page, limit, ...queries } = req.query;
 
-        const { error: pageErr } = numberValidator.validate(+page);
-        const { error: limitErr } = numberValidator.validate(+limit);
+        const { error: pageErr } = numericalValueValidator.validate(+page);
+        const { error: limitErr } = numericalValueValidator.validate(+limit);
         const { error } = optionalUserFieldsValidator.validate(queries);
 
         if (pageErr) {
