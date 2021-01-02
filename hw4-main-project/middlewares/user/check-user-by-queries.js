@@ -1,3 +1,4 @@
+const { commonValidators: { numberValidator }, userValidators: { optionalUserFieldsValidator } } = require('../../validators');
 const { statusMessagesEnum: { NO_ENTITY_FOUND } } = require('../../constants');
 const { userService } = require('../../services');
 
@@ -6,22 +7,31 @@ module.exports = async (req, res, next) => {
         // eslint-disable-next-line prefer-const
         let { page, limit, ...queries } = req.query;
 
-        if (!page || page <= 0 || !Number.isInteger(+page)) {
+        const { error: pageErr } = numberValidator.validate(+page);
+        const { error: limitErr } = numberValidator.validate(+limit);
+        const { error } = optionalUserFieldsValidator.validate(queries);
+
+        if (pageErr) {
             page = 1;
         }
 
-        if (!limit || limit <= 0 || !Number.isInteger(+limit)) {
+        if (limitErr) {
             limit = await userService.getNumberOfUsers();
         }
 
-        const offset = limit * (page - 1);
-
-        const foundUsers = await userService.getUsers(queries, offset, +limit);
-
-        if (!foundUsers.length) {
-            req.message = NO_ENTITY_FOUND;
+        if (error) {
+            const [{ message }] = error.details;
+            req.message = message;
         } else {
-            req.users = foundUsers;
+            const offset = limit * (page - 1);
+
+            const foundUsers = await userService.getUsers(queries, offset, +limit);
+
+            if (!foundUsers.length) {
+                req.message = NO_ENTITY_FOUND;
+            } else {
+                req.users = foundUsers;
+            }
         }
 
         next();

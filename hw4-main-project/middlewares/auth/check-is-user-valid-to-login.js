@@ -1,10 +1,10 @@
+const { authValidators: { loginValidator } } = require('../../validators');
 const { ErrorHandler } = require('../../errors');
 const { statusCodesEnum: { BAD_REQUEST } } = require('../../constants');
-const { userValidators: { newUserValidator } } = require('../../validators');
 
 module.exports = (req, res, next) => {
     try {
-        const { error } = newUserValidator.validate(req.body);
+        const { error } = loginValidator.validate(req.body);
 
         if (error) {
             const [{ message }] = error.details;

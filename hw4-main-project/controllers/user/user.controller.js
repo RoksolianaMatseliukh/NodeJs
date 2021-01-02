@@ -3,6 +3,7 @@ const {
     statusMessagesEnum: { ENTITY_EDITED, ENTITY_CREATED }
 } = require('../../constants');
 const { userService } = require('../../services');
+const { hash } = require('../../helpers');
 
 module.exports = {
     getUsersWithCars: (req, res, next) => {
@@ -23,7 +24,9 @@ module.exports = {
 
     createUser: async (req, res, next) => {
         try {
-            await userService.createUser(req.body);
+            const password = await hash(req.body.password);
+
+            await userService.createUser({ ...req.body, password });
 
             res.status(CREATED).json(ENTITY_CREATED);
         } catch (e) {

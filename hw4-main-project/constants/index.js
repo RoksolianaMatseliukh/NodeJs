@@ -3,5 +3,7 @@ module.exports = {
     modelNamesEnum: require('./model-names.enum'),
     tableNamesEnum: require('./table-names.enum'),
     statusCodesEnum: require('./status-codes.enum'),
-    statusMessagesEnum: require('./status-messages.enum')
+    statusMessagesEnum: require('./status-messages.enum'),
+    regexpEnum: require('./regexp.enum'),
+    dateEnum: require('./date.enum')
 };

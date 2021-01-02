@@ -1,7 +1,7 @@
 const {
     statusCodesEnum: { BAD_REQUEST, NOT_FOUND },
     statusMessagesEnum: {
-        EMAIL_ALREADY_EXISTS, ID_NOT_FOUND, NOT_VALID_ID, NOT_VALID_BODY
+        EMAIL_ALREADY_EXISTS, ID_NOT_FOUND, NOT_VALID_ID, NOT_VALID_BODY, WRONG_EMAIL_OR_PASSWORD
     }
 } = require('../constants');
 
@@ -23,6 +23,11 @@ module.exports = {
 
     NOT_VALID_ID: {
         message: NOT_VALID_ID,
+        code: BAD_REQUEST
+    },
+
+    WRONG_EMAIL_OR_PASSWORD: {
+        message: WRONG_EMAIL_OR_PASSWORD,
         code: BAD_REQUEST
     }
 };

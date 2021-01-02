@@ -1,14 +1,14 @@
-const { ErrorHandler, customErrors: { NOT_VALID_BODY } } = require('../../errors');
+const { ErrorHandler } = require('../../errors');
+const { carValidators: { newCarValidator } } = require('../../validators');
+const { statusCodesEnum: { BAD_REQUEST } } = require('../../constants');
 
 module.exports = (req, res, next) => {
     try {
-        const {
-            model, price, year, user_id, ...otherFields
-        } = req.body;
+        const { error } = newCarValidator.validate(req.body);
 
-        if (!model || !price || !year || !user_id || user_id < 0 || !Number.isInteger(+user_id)
-            || Object.values(otherFields).length) {
-            throw new ErrorHandler(NOT_VALID_BODY.message, NOT_VALID_BODY.code);
+        if (error) {
+            const [{ message }] = error.details;
+            throw new ErrorHandler(message, BAD_REQUEST);
         }
 
         next();

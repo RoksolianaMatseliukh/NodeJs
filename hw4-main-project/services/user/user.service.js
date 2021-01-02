@@ -9,19 +9,10 @@ module.exports = {
         const CarModel = db.getModel(CAR);
 
         return UserModel.findAll({
-            attributes: [
-                'name',
-                'age',
-                'email'
-            ],
             where: queries,
             include: {
                 model: CarModel,
-                attributes: [
-                    'model',
-                    'price',
-                    'year'
-                ]
+                attributes: { exclude: ['user_id'] }
             },
             order: literal('age DESC'),
             offset,

@@ -1,12 +1,17 @@
-const { ErrorHandler, customErrors: { NOT_VALID_ID, ENTITY_NOT_FOUND } } = require('../../errors');
+const { commonValidators: { numberValidator } } = require('../../validators');
+const { ErrorHandler, customErrors: { ENTITY_NOT_FOUND } } = require('../../errors');
 const { userService } = require('../../services');
+const { statusCodesEnum: { BAD_REQUEST } } = require('../../constants');
 
 module.exports = async (req, res, next) => {
     try {
         const { userId } = req.params;
 
-        if (userId <= 0 || !Number.isInteger(+userId)) {
-            throw new ErrorHandler(NOT_VALID_ID.message, NOT_VALID_ID.code);
+        const { error } = numberValidator.validate(+userId);
+
+        if (error) {
+            const [{ message }] = error.details;
+            throw new ErrorHandler(message, BAD_REQUEST);
         }
 
         const foundUser = await userService.getUserById(userId);
