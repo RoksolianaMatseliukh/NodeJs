@@ -5,5 +5,6 @@ module.exports = {
     statusCodesEnum: require('./status-codes.enum'),
     statusMessagesEnum: require('./status-messages.enum'),
     regexpEnum: require('./regexp.enum'),
-    dateEnum: require('./date.enum')
+    dateEnum: require('./date.enum'),
+    JWTEnum: require('./JWT.enum')
 };

@@ -5,6 +5,8 @@ module.exports = {
     PASSWORD: 'password',
     USER: 'root',
 
+    NOW: 'now',
+
     // reference key
     ID: 'id',
 

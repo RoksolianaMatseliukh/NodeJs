@@ -39,12 +39,28 @@ module.exports = (client, DataTypes) => {
     );
 
     const Car = require('./Car')(client, DataTypes);
+    const OAuth = require('./OAuth')(client, DataTypes);
 
     User.hasMany(Car, {
         foreignKey: USER_ID,
         onDelete: 'cascade',
         onUpdate: 'cascade'
     });
+
+    User.hasMany(OAuth, {
+        foreignKey: USER_ID,
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
+    });
+
+    // User.hasMany([
+    //     Car,
+    //     OAuth
+    // ], {
+    //     foreignKey: USER_ID,
+    //     onDelete: 'cascade',
+    //     onUpdate: 'cascade'
+    // });
 
     return User;
 };
