@@ -1,6 +1,6 @@
 const { passwordHelper: { hash } } = require('../../helpers');
 const {
-    statusCodesEnum: { CREATED, NO_CONTENT, OK },
+    statusCodesEnum: { CREATED, NO_CONTENT },
     statusMessagesEnum: { ENTITY_EDITED, ENTITY_CREATED }
 } = require('../../constants');
 const { userService } = require('../../services');
@@ -8,7 +8,7 @@ const { userService } = require('../../services');
 module.exports = {
     getUsersWithCars: (req, res, next) => {
         try {
-            res.status(OK).json(req.message || req.users);
+            res.json(req.message || req.users);
         } catch (e) {
             next(e);
         }
@@ -16,7 +16,7 @@ module.exports = {
 
     getUserById: (req, res, next) => {
         try {
-            res.status(OK).json(req.user);
+            res.json(req.user);
         } catch (e) {
             next(e);
         }

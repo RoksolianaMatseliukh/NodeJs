@@ -1,12 +1,12 @@
 const { carService } = require('../../services');
-const { statusCodesEnum: { CREATED, OK }, statusMessagesEnum: { ENTITY_CREATED } } = require('../../constants');
+const { statusCodesEnum: { CREATED }, statusMessagesEnum: { ENTITY_CREATED } } = require('../../constants');
 
 module.exports = {
     getCars: async (req, res, next) => {
         try {
             const cars = await carService.getCars();
 
-            res.status(OK).json(cars);
+            res.json(cars);
         } catch (e) {
             next(e);
         }
