@@ -1,4 +1,4 @@
-const { compare } = require('../../helpers');
+const { passwordHelper: { compare } } = require('../../helpers');
 
 module.exports = async (req, res, next) => {
     try {

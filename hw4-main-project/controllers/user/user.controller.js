@@ -1,9 +1,9 @@
+const { passwordHelper: { hash } } = require('../../helpers');
 const {
     statusCodesEnum: { CREATED, NO_CONTENT, OK },
     statusMessagesEnum: { ENTITY_EDITED, ENTITY_CREATED }
 } = require('../../constants');
 const { userService } = require('../../services');
-const { hash } = require('../../helpers');
 
 module.exports = {
     getUsersWithCars: (req, res, next) => {

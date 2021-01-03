@@ -1,1 +1,3 @@
-module.exports = require('./password.helper');
+module.exports = {
+    passwordHelper: require('./password.helper')
+};
