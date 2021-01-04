@@ -1,17 +1,17 @@
+const { carService } = require('../../services');
 const { ErrorHandler, customErrors: { ENTITY_NOT_FOUND } } = require('../../errors');
-const { userService } = require('../../services');
 
 module.exports = async (req, res, next) => {
     try {
-        const { userId } = req.params;
+        const { carId } = req.params;
 
-        const foundUser = await userService.getUserById(userId);
+        const foundCar = await carService.getCarById(carId);
 
-        if (!foundUser) {
+        if (!foundCar) {
             throw new ErrorHandler(ENTITY_NOT_FOUND.message, ENTITY_NOT_FOUND.code);
         }
 
-        req.user = foundUser;
+        req.car = foundCar;
         next();
     } catch (e) {
         next(e);

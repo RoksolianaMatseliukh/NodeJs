@@ -1,4 +1,8 @@
 module.exports = {
-    JWT_SECRET: 'something_very_secret',
-    JWT_REFRESH_SECRET: 'something_refresh_very_secret'
+    AUTHORIZATION: 'Authorization',
+    ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
+    REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
+
+    D10: '10d',
+    M10: '30m'
 };

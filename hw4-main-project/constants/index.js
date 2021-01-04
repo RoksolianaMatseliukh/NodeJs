@@ -6,5 +6,6 @@ module.exports = {
     statusMessagesEnum: require('./status-messages.enum'),
     regexpEnum: require('./regexp.enum'),
     dateEnum: require('./date.enum'),
-    JWTEnum: require('./JWT.enum')
+    JWTEnum: require('./JWT.enum'),
+    tableAttributesEnum: require('./table-attributes.enum')
 };

@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const { regexpEnum: { EMAIL, PASSWORD } } = require('../../constants');
+const { regexpEnum: { EMAIL } } = require('../../constants');
 
 module.exports = Joi.object({
     name: Joi.string().trim().alphanum().min(2)
@@ -8,6 +8,5 @@ module.exports = Joi.object({
         .optional(),
     age: Joi.number().integer().greater(15).less(120)
         .optional(),
-    email: Joi.string().trim().regex(EMAIL).optional(),
-    password: Joi.string().trim().regex(PASSWORD).optional()
+    email: Joi.string().trim().regex(EMAIL).optional()
 });

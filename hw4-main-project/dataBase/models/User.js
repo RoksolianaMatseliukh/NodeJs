@@ -1,4 +1,4 @@
-const { dataBaseEnum: { USER_ID }, modelNamesEnum: { USER }, tableNamesEnum: { USERS } } = require('../../constants');
+const { dataBaseEnum: { ASSOCIATION }, modelNamesEnum: { USER }, tableNamesEnum: { USERS } } = require('../../constants');
 
 module.exports = (client, DataTypes) => {
     const User = client.define(
@@ -41,26 +41,8 @@ module.exports = (client, DataTypes) => {
     const Car = require('./Car')(client, DataTypes);
     const OAuth = require('./OAuth')(client, DataTypes);
 
-    User.hasMany(Car, {
-        foreignKey: USER_ID,
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
-    });
-
-    User.hasMany(OAuth, {
-        foreignKey: USER_ID,
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
-    });
-
-    // User.hasMany([
-    //     Car,
-    //     OAuth
-    // ], {
-    //     foreignKey: USER_ID,
-    //     onDelete: 'cascade',
-    //     onUpdate: 'cascade'
-    // });
+    User.hasMany(Car, ASSOCIATION);
+    User.hasOne(OAuth, ASSOCIATION);
 
     return User;
 };

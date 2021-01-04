@@ -5,9 +5,9 @@ const { dateEnum: { CURRENT_YEAR, MIN_MANUFACTURE_CAR_YEAR } } = require('../../
 module.exports = Joi.object({
     model: Joi.string().trim().alphanum().min(2)
         .max(25)
-        .required(),
-    price: Joi.number().positive().required(),
+        .optional(),
+    price: Joi.number().positive().optional(),
     year: Joi.number().integer().min(MIN_MANUFACTURE_CAR_YEAR).max(CURRENT_YEAR)
-        .required(),
-    user_id: Joi.number().integer().min(1).required()
+        .optional(),
+    user_id: Joi.number().integer().min(1).optional()
 });

@@ -4,7 +4,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 const {
     dataBaseEnum: {
-        AUTO_SHOP, LOCALHOST, MYSQL, PASSWORD, USER
+        DATABASE_NAME, LOCALHOST, MYSQL, PASSWORD, USER
     }
 } = require('../constants');
 
@@ -12,7 +12,7 @@ module.exports = (() => {
     let instance;
 
     const initConnection = () => {
-        const client = new Sequelize(AUTO_SHOP, USER, PASSWORD, {
+        const client = new Sequelize(DATABASE_NAME, USER, PASSWORD, {
             host: LOCALHOST,
             dialect: MYSQL
         });

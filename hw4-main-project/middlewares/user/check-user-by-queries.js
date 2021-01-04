@@ -3,6 +3,7 @@ const {
     userValidators: { optionalUserFieldsValidator }
 } = require('../../validators');
 const { statusMessagesEnum: { NO_ENTITY_FOUND } } = require('../../constants');
+const { tableAttributesEnum: { EMAIL, PASSWORD } } = require('../../constants');
 const { userService } = require('../../services');
 
 module.exports = async (req, res, next) => {
@@ -28,7 +29,7 @@ module.exports = async (req, res, next) => {
         } else {
             const offset = limit * (page - 1);
 
-            const foundUsers = await userService.getUsers(queries, offset, +limit);
+            const foundUsers = await userService.getUsers(queries, offset, +limit, EMAIL, PASSWORD);
 
             if (!foundUsers.length) {
                 req.message = NO_ENTITY_FOUND;

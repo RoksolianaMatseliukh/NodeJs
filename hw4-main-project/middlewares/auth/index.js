@@ -1,5 +1,7 @@
 module.exports = {
     checkPasswordHash: require('./check-password-hash'),
-    checkUserByEmail: require('./check-user-by-email'),
-    checkIsUserValidToLogin: require('./check-is-user-valid-to-login')
+    checkUserByEmailToLogin: require('./check-user-by-email-to-login'),
+    checkIsUserValidToLogin: require('./check-is-user-valid-to-login'),
+    checkAccessToken: require('./check-access-token'),
+    checkRefreshToken: require('./check-refresh-token')
 };
