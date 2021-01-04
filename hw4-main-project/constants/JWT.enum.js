@@ -4,5 +4,5 @@ module.exports = {
     REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
 
     D10: '10d',
-    M10: '30m'
+    M10: '10m'
 };
