@@ -10,7 +10,7 @@ const { JWTEnum: { AUTHORIZATION, ACCESS_TOKEN_SECRET } } = require('../../const
 
 module.exports = async (req, res, next) => {
     try {
-        const { userId, carId } = req.params || {};
+        const { userId, carId } = req.params;
         const { user_id } = req.body;
 
         const access_token = req.get(AUTHORIZATION);
