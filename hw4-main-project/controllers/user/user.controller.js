@@ -1,9 +1,10 @@
+const { emailActionsEnum: { ACTIVATE_ACCOUNT, RESTORE_ACCOUNT } } = require('../../constants');
 const { passwordHelper: { hash } } = require('../../helpers');
 const {
     statusCodesEnum: { CREATED, NO_CONTENT },
     statusMessagesEnum: { CAR_ADDED_TO_USER, ENTITY_EDITED, ENTITY_CREATED }
 } = require('../../constants');
-const { userService } = require('../../services');
+const { emailService, userService } = require('../../services');
 
 module.exports = {
     getUsersWithCars: (req, res, next) => {
@@ -24,9 +25,11 @@ module.exports = {
 
     createUser: async (req, res, next) => {
         try {
-            const password = await hash(req.body.password);
+            const { name, email, password } = req.body;
+            const hashedPassword = await hash(password);
 
-            await userService.createUser({ ...req.body, password });
+            await userService.createUser({ ...req.body, password: hashedPassword });
+            await emailService.sendMail(email, ACTIVATE_ACCOUNT, { userName: name });
 
             res.status(CREATED).json(ENTITY_CREATED);
         } catch (e) {
@@ -50,8 +53,10 @@ module.exports = {
     deleteUserById: async (req, res, next) => {
         try {
             const { userId } = req.params;
+            const { name, email } = req.user;
 
             await userService.deleteUserById(userId);
+            await emailService.sendMail(email, RESTORE_ACCOUNT, { userName: name });
 
             res.sendStatus(NO_CONTENT);
         } catch (e) {

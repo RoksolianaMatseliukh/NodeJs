@@ -1,4 +1,4 @@
 module.exports = {
-    WELCOME: '1',
-    USER_DELETED: '2'
+    ACTIVATE_ACCOUNT: '1',
+    RESTORE_ACCOUNT: '2'
 };

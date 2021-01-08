@@ -1,13 +1,13 @@
-const { emailActionsEnum: { WELCOME, USER_DELETED } } = require('../constants');
+const { emailActionsEnum: { ACTIVATE_ACCOUNT, RESTORE_ACCOUNT } } = require('../constants');
 
 module.exports = {
-    [WELCOME]: {
-        subject: 'welcome',
-        templateName: 'welcome'
+    [ACTIVATE_ACCOUNT]: {
+        subject: 'activate your account',
+        templateName: 'activate-account'
     },
 
-    [USER_DELETED]: {
-        subject: 'your account is deleted',
-        templateName: 'user-deleted'
+    [RESTORE_ACCOUNT]: {
+        subject: 'restore your account',
+        templateName: 'restore-account'
     }
 };
