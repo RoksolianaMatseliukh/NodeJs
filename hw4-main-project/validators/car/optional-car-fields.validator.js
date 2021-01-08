@@ -8,6 +8,5 @@ module.exports = Joi.object({
         .optional(),
     price: Joi.number().positive().optional(),
     year: Joi.number().integer().min(MIN_MANUFACTURE_CAR_YEAR).max(CURRENT_YEAR)
-        .optional(),
-    user_id: Joi.number().integer().min(1).optional()
+        .optional()
 });

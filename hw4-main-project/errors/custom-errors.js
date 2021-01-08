@@ -4,7 +4,7 @@ const {
     },
     statusMessagesEnum: {
         EMAIL_ALREADY_EXISTS, ID_NOT_FOUND, NO_TOKEN, NOT_VALID_ID, NOT_VALID_BODY, NOT_VALID_TOKEN,
-        PERMISSION_DENIED, WRONG_EMAIL_OR_PASSWORD
+        PERMISSION_DENIED, USER_ALREADY_HAVE_SAME_CAR, WRONG_EMAIL_OR_PASSWORD, WRONG_TEMPLATE_NAME
     }
 } = require('../constants');
 
@@ -25,8 +25,18 @@ module.exports = {
         code: BAD_REQUEST
     },
 
+    USER_ALREADY_HAVE_SAME_CAR: {
+        message: USER_ALREADY_HAVE_SAME_CAR,
+        code: BAD_REQUEST
+    },
+
     WRONG_EMAIL_OR_PASSWORD: {
         message: WRONG_EMAIL_OR_PASSWORD,
+        code: BAD_REQUEST
+    },
+
+    WRONG_TEMPLATE_NAME: {
+        message: WRONG_TEMPLATE_NAME,
         code: BAD_REQUEST
     },
 

@@ -1,4 +1,5 @@
 module.exports = {
+    CAR_ADDED_TO_USER: 'car added to user',
     ENTITY_CREATED: 'created',
     ENTITY_EDITED: 'edited',
     NO_ENTITY_FOUND: 'no entity found',
@@ -10,5 +11,7 @@ module.exports = {
     NOT_VALID_ID: 'id must be greater than zero and consist only of numbers',
     NOT_VALID_TOKEN: 'not valid token',
     PERMISSION_DENIED: 'permission denied',
-    WRONG_EMAIL_OR_PASSWORD: 'wrong email or password'
+    USER_ALREADY_HAVE_SAME_CAR: 'user already have same car',
+    WRONG_EMAIL_OR_PASSWORD: 'wrong email or password',
+    WRONG_TEMPLATE_NAME: 'wrong template name'
 };

@@ -3,11 +3,11 @@ const { userService } = require('../../services');
 
 module.exports = async (req, res, next) => {
     try {
-        const { user_id } = req.body;
+        const { userId: user_id, carId: car_id } = req.params;
 
-        const foundUser = await userService.getUserById(user_id);
+        const foundRelation = await userService.getRelationUserToCar(user_id, car_id);
 
-        if (!foundUser) {
+        if (!foundRelation) {
             throw new ErrorHandler(ENTITY_NOT_FOUND.message, ENTITY_NOT_FOUND.code);
         }
 

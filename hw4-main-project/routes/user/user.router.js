@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
 const { userController } = require('../../controllers');
-const { authMiddlewares, userMiddlewares } = require('../../middlewares');
+const { authMiddlewares, carMiddlewares, userMiddlewares } = require('../../middlewares');
 
 const userRouter = Router();
 
@@ -9,10 +9,18 @@ userRouter.get('/', userMiddlewares.checkUserByQueries, userController.getUsersW
 userRouter.post('/', userMiddlewares.checkIsUserValidToCreate, userMiddlewares.checkIfUserAlreadyExists,
     userController.createUser);
 
-userRouter.use('/:userId', userMiddlewares.checkIsIdValid);
-userRouter.get('/:userId', userMiddlewares.checkUserByParams, userController.getUserById);
-userRouter.put('/:userId', authMiddlewares.checkAccessToken, userMiddlewares.checkIsUserValidToEdit,
-    userMiddlewares.checkIfUserAlreadyExists, userController.editUserById);
-userRouter.delete('/:userId', authMiddlewares.checkAccessToken, userController.deleteUserById);
+userRouter.get('/:userId', userMiddlewares.checkIsIdValid, userMiddlewares.checkUserByParams, userController.getUserById);
+
+userRouter.use('/:userId', userMiddlewares.checkIsIdValid, authMiddlewares.checkAccessToken);
+userRouter.put('/:userId', userMiddlewares.checkIsUserValidToEdit, userMiddlewares.checkIfUserAlreadyExists,
+    userController.editUserById);
+userRouter.delete('/:userId', userController.deleteUserById);
+
+// add car to user
+userRouter.post('/:userId', carMiddlewares.checkIsCarValidToBeAddedToUser, carMiddlewares.checkIfCarExists,
+    userMiddlewares.checkIfUserHaveSameCarToAdd, userController.addCarToUser);
+// delete car from user
+userRouter.delete('/:userId/:carId', userMiddlewares.checkIsIdValid, authMiddlewares.checkAccessToken,
+    carMiddlewares.checkIfCarExists, userMiddlewares.checkIfUserHaveSameCarToDelete, userController.deleteCarFromUser);
 
 module.exports = userRouter;

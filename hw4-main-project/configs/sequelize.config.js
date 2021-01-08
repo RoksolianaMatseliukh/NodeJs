@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const {
     dataBaseEnum: {
         DATABASE_NAME, LOCALHOST, MYSQL, PASSWORD, USER

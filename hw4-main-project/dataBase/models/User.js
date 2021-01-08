@@ -38,10 +38,8 @@ module.exports = (client, DataTypes) => {
         }
     );
 
-    const Car = require('./Car')(client, DataTypes);
     const OAuth = require('./OAuth')(client, DataTypes);
 
-    User.hasMany(Car, ASSOCIATION);
     User.hasOne(OAuth, ASSOCIATION);
 
     return User;

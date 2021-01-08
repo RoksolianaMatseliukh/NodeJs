@@ -1,17 +1,17 @@
 const jwt = require('jsonwebtoken');
 
-const { authService, carService } = require('../../services');
+const { appConfigs: { ACCESS_TOKEN_SECRET } } = require('../../configs');
+const { authService } = require('../../services');
 const {
     ErrorHandler, customErrors: {
-        ENTITY_NOT_FOUND, NO_TOKEN, NOT_VALID_TOKEN, PERMISSION_DENIED
+        NO_TOKEN, NOT_VALID_TOKEN, PERMISSION_DENIED
     }
 } = require('../../errors');
-const { JWTEnum: { AUTHORIZATION, ACCESS_TOKEN_SECRET } } = require('../../constants');
+const { JWTEnum: { AUTHORIZATION } } = require('../../constants');
 
 module.exports = async (req, res, next) => {
     try {
-        const { userId, carId } = req.params;
-        const { user_id } = req.body;
+        const { userId } = req.params;
 
         const access_token = req.get(AUTHORIZATION);
 
@@ -33,24 +33,6 @@ module.exports = async (req, res, next) => {
 
         if (userId && userWithToken.id !== +userId) {
             throw new ErrorHandler(PERMISSION_DENIED.message, PERMISSION_DENIED.code);
-        }
-
-        // when add car to user
-        if (!userId && !carId && userWithToken.id !== user_id) {
-            throw new ErrorHandler(PERMISSION_DENIED.message, PERMISSION_DENIED.code);
-        }
-
-        // when edit / delete car
-        if (carId) {
-            const { user_id: carOwnerId } = await carService.getCarById(carId) || {};
-
-            if (!carOwnerId) {
-                throw new ErrorHandler(ENTITY_NOT_FOUND.message, ENTITY_NOT_FOUND.code);
-            }
-
-            if (userWithToken.id !== carOwnerId) {
-                throw new ErrorHandler(PERMISSION_DENIED.message, PERMISSION_DENIED.code);
-            }
         }
 
         req.user = userWithToken;

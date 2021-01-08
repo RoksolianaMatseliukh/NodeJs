@@ -4,14 +4,21 @@ const { statusCodesEnum: { BAD_REQUEST } } = require('../../constants');
 
 module.exports = (req, res, next) => {
     try {
-        const { userId, carId } = req.params;
+        const { carId, userId } = req.params;
 
-        const { error } = numericalFieldValidator.validate(+userId || +carId);
+        const idChecker = (id) => {
+            if (id) {
+                const { error } = numericalFieldValidator.validate(id);
 
-        if (error) {
-            const [{ message }] = error.details;
-            throw new ErrorHandler(message, BAD_REQUEST);
-        }
+                if (error) {
+                    const [{ message }] = error.details;
+                    throw new ErrorHandler(message, BAD_REQUEST);
+                }
+            }
+        };
+
+        idChecker(carId);
+        idChecker(userId);
 
         next();
     } catch (e) {

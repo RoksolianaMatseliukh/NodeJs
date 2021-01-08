@@ -24,12 +24,6 @@ module.exports = (client, DataTypes) => {
             year: {
                 type: DataTypes.INTEGER,
                 allowNull: false
-            },
-
-            user_id: {
-                type: DataTypes.INTEGER,
-                foreignKey: true,
-                allowNull: false
             }
         },
         {

@@ -1,4 +1,4 @@
-const { dataBaseEnum: { ID }, tableNamesEnum: { CARS, USERS } } = require('../../constants');
+const { dataBaseEnum: { ID }, tableNamesEnum: { CARS, USERS, USERS_WITH_CARS } } = require('../../constants');
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
@@ -53,6 +53,15 @@ module.exports = {
             year: {
                 type: Sequelize.DataTypes.INTEGER,
                 allowNull: false
+            }
+        });
+
+        await queryInterface.createTable(USERS_WITH_CARS, {
+            id: {
+                type: Sequelize.DataTypes.INTEGER,
+                autoIncrement: true,
+                allowNull: false,
+                primaryKey: true
             },
 
             user_id: {
@@ -65,6 +74,17 @@ module.exports = {
                 },
                 onDelete: 'cascade',
                 onUpdate: 'cascade'
+            },
+            car_id: {
+                type: Sequelize.DataTypes.INTEGER,
+                allowNull: false,
+                foreignKey: true,
+                references: {
+                    model: CARS,
+                    key: ID
+                },
+                onDelete: 'cascade',
+                onUpdate: 'cascade'
             }
         });
     },
@@ -73,5 +93,6 @@ module.exports = {
     down: async (queryInterface, Sequelize) => {
         await queryInterface.dropTable(USERS);
         await queryInterface.dropTable(CARS);
+        await queryInterface.dropTable(USERS_WITH_CARS);
     }
 };

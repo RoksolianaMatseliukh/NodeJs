@@ -1,12 +1,10 @@
-const { commonValidators: { numericalFieldValidator } } = require('../../validators');
 const { ErrorHandler } = require('../../errors');
+const { carValidators: { addCarToUserValidator } } = require('../../validators');
 const { statusCodesEnum: { BAD_REQUEST } } = require('../../constants');
 
 module.exports = (req, res, next) => {
     try {
-        const { user_id } = req.body;
-
-        const { error } = numericalFieldValidator.validate(user_id);
+        const { error } = addCarToUserValidator.validate(req.body);
 
         if (error) {
             const [{ message }] = error.details;
