@@ -21,6 +21,6 @@ userRouter.post('/:userId', carMiddlewares.checkIsCarValidToBeAddedToUser, carMi
     userMiddlewares.checkIfUserHaveSameCarToAdd, userController.addCarToUser);
 // delete car from user
 userRouter.delete('/:userId/:carId', userMiddlewares.checkIsIdValid, authMiddlewares.checkAccessToken,
-    carMiddlewares.checkIfCarExists, userMiddlewares.checkIfUserHaveSameCarToDelete, userController.deleteCarFromUser);
+    userMiddlewares.checkIfUserHaveSameCarToDelete, userController.deleteCarFromUser);
 
 module.exports = userRouter;

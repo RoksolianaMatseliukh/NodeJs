@@ -3,7 +3,7 @@ const { passwordHelper: { compare } } = require('../../helpers');
 module.exports = async (req, res, next) => {
     try {
         const { password } = req.body;
-        const { password: hashedPassword, ...userToShow } = req.user.dataValues;
+        const { password: hashedPassword, ...userToShow } = req.user;
 
         await compare(password, hashedPassword);
 
