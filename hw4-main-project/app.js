@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 
 const { apiRouter, notFoundRouter } = require('./routes');
+const { appConfigs: { PORT } } = require('./configs');
 const db = require('./dataBase').getInstance();
 const { statusCodesEnum: { INTERNAL_SERVER_ERROR } } = require('./constants');
 
@@ -21,4 +22,4 @@ app.use('*', (err, req, res, next) => {
         .json({ message: err.message });
 });
 
-app.listen(process.env.PORT, (err) => (!err && console.log(`app ${process.env.PORT} in process`)));
+app.listen(PORT, (err) => (!err && console.log(`app ${PORT} in process`)));

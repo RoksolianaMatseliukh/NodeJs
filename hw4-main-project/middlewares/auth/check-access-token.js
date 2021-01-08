@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken');
 
+const { appConfigs: { ACCESS_TOKEN_SECRET } } = require('../../configs');
 const { authService, carService } = require('../../services');
 const {
     ErrorHandler, customErrors: {
         ENTITY_NOT_FOUND, NO_TOKEN, NOT_VALID_TOKEN, PERMISSION_DENIED
     }
 } = require('../../errors');
-const { JWTEnum: { AUTHORIZATION, ACCESS_TOKEN_SECRET } } = require('../../constants');
+const { JWTEnum: { AUTHORIZATION } } = require('../../constants');
 
 module.exports = async (req, res, next) => {
     try {

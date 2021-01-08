@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
 
+const { appConfigs: { REFRESH_TOKEN_SECRET } } = require('../../configs');
 const { authService } = require('../../services');
 const { ErrorHandler, customErrors: { NO_TOKEN, NOT_VALID_TOKEN } } = require('../../errors');
-const { JWTEnum: { AUTHORIZATION, REFRESH_TOKEN_SECRET } } = require('../../constants');
+const { JWTEnum: { AUTHORIZATION } } = require('../../constants');
 
 module.exports = async (req, res, next) => {
     try {
