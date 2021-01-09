@@ -7,5 +7,8 @@ module.exports = {
     ROOT_EMAIL_SERVICE: process.env.ROOT_EMAIL_SERVICE || 'gmail',
     ROOT_EMAIL_FROM: process.env.ROOT_EMAIL_FROM || 'xxx@x.com',
 
+    DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || 'xxx',
+    DATABASE_USER: process.env.DATABASE_USER || 'xxx',
+
     PORT: process.env.PORT || 5000
 };
