@@ -1,4 +1,4 @@
-const { dataBaseEnum: { NOW }, modelNamesEnum: { OAUTH }, tableNamesEnum: { O_AUTH } } = require('../../constants');
+const { dateEnum: { NOW }, modelNamesEnum: { OAUTH }, tableNamesEnum: { O_AUTH } } = require('../../constants');
 
 module.exports = (client, DataTypes) => {
     const O_Auth = client.define(

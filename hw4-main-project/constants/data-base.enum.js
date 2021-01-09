@@ -1,11 +1,7 @@
 module.exports = {
-    DATABASE_NAME: process.env.DATABASE_NAME,
+    DATABASE_NAME: 'auto_shop',
     LOCALHOST: 'localhost',
     MYSQL: 'mysql',
-    PASSWORD: process.env.DATABASE_PASSWORD,
-    USER: process.env.DATABASE_USER,
-
-    NOW: 'now',
 
     // reference key
     ID: 'id',
