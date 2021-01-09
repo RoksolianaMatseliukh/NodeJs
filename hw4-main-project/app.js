@@ -1,4 +1,5 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 const { apiRouter, notFoundRouter } = require('./routes');
@@ -10,6 +11,7 @@ const app = express();
 
 db.setModels();
 
+app.use(fileUpload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

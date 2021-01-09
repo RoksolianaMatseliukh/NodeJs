@@ -8,5 +8,6 @@ module.exports = {
     dateEnum: require('./date.enum'),
     JWTEnum: require('./JWT.enum'),
     tableAttributesEnum: require('./table-attributes.enum'),
-    emailActionsEnum: require('./email-actions.enum')
+    emailActionsEnum: require('./email-actions.enum'),
+    uploadFilesEnum: require('./upload-files.enum')
 };
