@@ -1,5 +1,5 @@
 module.exports = {
-    DATABASE_NAME: process.env.DATABASE_NAME,
+    DATABASE_NAME: 'auto_shop',
     LOCALHOST: 'localhost',
     MYSQL: 'mysql',
 
