@@ -15,6 +15,8 @@ module.exports = {
     TOO_LARGE_FILE: 'too large file',
     USER_ALREADY_HAVE_SAME_CAR: 'user already have same car',
     WRONG_EMAIL_OR_PASSWORD: 'wrong email or password',
-    WRONG_NUMBER_OF_IMAGES: 'only one image is allowed',
+    WRONG_NUMBER_OF_AVATAR: 'only one avatar is allowed',
+    WRONG_NUMBER_OF_DOCS: 'only 10 documents is allowed',
+    WRONG_NUMBER_OF_IMGS: 'only 10 images is allowed',
     WRONG_TEMPLATE_NAME: 'wrong template name'
 };

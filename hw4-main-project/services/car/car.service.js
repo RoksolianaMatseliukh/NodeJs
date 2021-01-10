@@ -1,23 +1,35 @@
 const db = require('../../dataBase').getInstance();
-const { modelNamesEnum: { CAR } } = require('../../constants');
+const { modelNamesEnum: { CAR, CAR_FILE } } = require('../../constants');
 
 module.exports = {
     getCars: () => {
         const CarModel = db.getModel(CAR);
+        const CarFileModel = db.getModel(CAR_FILE);
 
-        return CarModel.findAll();
+        return CarModel.findAll({ include: CarFileModel });
     },
 
     getCarById: (id) => {
         const CarModel = db.getModel(CAR);
+        const CarFileModel = db.getModel(CAR_FILE);
 
-        return CarModel.findByPk(id);
+        return CarModel.findByPk(id, {
+            include: CarFileModel
+        });
     },
 
-    createCar: async (car) => {
+    createCar: (car) => {
         const CarModel = db.getModel(CAR);
 
-        await CarModel.create(car);
+        return CarModel.create(car);
+    },
+
+    editCarById: async (id, editedCar) => {
+        const CarModel = db.getModel(CAR);
+
+        await CarModel.update(editedCar, {
+            where: { id }
+        });
     },
 
     deleteCarById: async (id) => {
@@ -26,14 +38,5 @@ module.exports = {
         await CarModel.destroy({
             where: { id }
         });
-    },
-
-    editCarById: async (id, editedCar) => {
-        const CarModel = db.getModel(CAR);
-
-        await CarModel.update(
-            { ...editedCar },
-            { where: { id } }
-        );
-    },
+    }
 };

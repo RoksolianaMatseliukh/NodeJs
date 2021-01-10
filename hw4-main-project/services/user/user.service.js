@@ -1,16 +1,19 @@
 const { Sequelize: { Op, literal } } = require('sequelize');
 
+const db = require('../../dataBase').getInstance();
 const {
-    modelNamesEnum: { CAR, USER_WITH_CAR, USER },
+    modelNamesEnum: {
+        CAR, CAR_FILE, USER_WITH_CAR, USER
+    },
     tableAttributesEnum: { AGE, EMAIL, PASSWORD }
 } = require('../../constants');
-const db = require('../../dataBase').getInstance();
 
 module.exports = {
     getUsers: async (queries, offset, limit, ...fieldsToExclude) => {
         const UserModel = db.getModel(USER);
         const UserWithCarModel = db.getModel(USER_WITH_CAR);
         const CarModel = db.getModel(CAR);
+        const CarFileModel = db.getModel(CAR_FILE);
 
         let users = await UserModel.findAll({
             where: queries,
@@ -34,7 +37,8 @@ module.exports = {
                     id: {
                         [Op.in]: car_ids
                     }
-                }
+                },
+                include: CarFileModel
             });
 
             return Object.assign(user.dataValues, { cars });
@@ -47,6 +51,7 @@ module.exports = {
         const UserModel = db.getModel(USER);
         const UserWithCarModel = db.getModel(USER_WITH_CAR);
         const CarModel = db.getModel(CAR);
+        const CarFileModel = db.getModel(CAR_FILE);
 
         const user = (await UserModel.findByPk(id, {
             attributes: {
@@ -70,7 +75,8 @@ module.exports = {
                 id: {
                     [Op.in]: car_ids
                 }
-            }
+            },
+            include: CarFileModel
         });
 
         Object.assign(user, { cars });

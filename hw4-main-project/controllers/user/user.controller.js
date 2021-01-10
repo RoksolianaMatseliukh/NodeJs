@@ -1,9 +1,9 @@
 const fs = require('fs-extra').promises;
 const path = require('path');
-const uuid = require('uuid').v1();
 
 const { emailActionsEnum: { ACTIVATE_ACCOUNT, RESTORE_ACCOUNT } } = require('../../constants');
-const { folderNamesEnum: { AVATAR, PUBLIC, USERS } } = require('../../constants');
+const { fileHelper } = require('../../helpers');
+const { folderNamesEnum: { PUBLIC, USERS } } = require('../../constants');
 const { passwordHelper: { hash } } = require('../../helpers');
 const {
     statusCodesEnum: { CREATED, NO_CONTENT },
@@ -39,17 +39,7 @@ module.exports = {
             const { id } = await userService.createUser({ ...req.body, password: hashedPassword });
 
             if (avatar) {
-                const avatarDirPath = path.join(USERS, `${id}`, AVATAR);
-                const avatarFullDirPath = path.join(process.cwd(), PUBLIC, avatarDirPath);
-
-                const avatarExtension = avatar.name.split('.').pop();
-
-                const avatarName = `${uuid}.${avatarExtension}`;
-                const avatarPath = path.join(avatarDirPath, avatarName);
-
-                await fs.mkdir(avatarFullDirPath, { recursive: true });
-                await avatar.mv(path.join(avatarFullDirPath, avatarName));
-
+                const avatarPath = await fileHelper.addAvatarToUser(avatar, id);
                 await userService.editUserById(id, { avatar: avatarPath });
             }
 
@@ -83,23 +73,7 @@ module.exports = {
             } = req;
 
             if (avatar) {
-                const avatarDirPath = path.join(USERS, `${userId}`, AVATAR);
-                const avatarFullDirPath = path.join(process.cwd(), PUBLIC, avatarDirPath);
-
-                const avatarExtension = avatar.name.split('.').pop();
-
-                const avatarName = `${uuid}.${avatarExtension}`;
-                const avatarPath = path.join(avatarDirPath, avatarName);
-
-                if (!existingAvatarPath) {
-                    await fs.mkdir(avatarFullDirPath, { recursive: true });
-                } else {
-                    await fs.unlink(path.join(process.cwd(), PUBLIC, existingAvatarPath));
-                }
-
-                await avatar.mv(path.join(avatarFullDirPath, avatarName));
-
-                req.body.avatar = avatarPath;
+                req.body.avatar = await fileHelper.changeUserAvatar(avatar, existingAvatarPath, userId);
             }
 
             await userService.editUserById(userId, req.body);
@@ -117,6 +91,8 @@ module.exports = {
 
             await userService.deleteUserById(userId);
             await emailService.sendMail(email, RESTORE_ACCOUNT, { userName: name });
+
+            await fs.rmdir(path.join(process.cwd(), PUBLIC, USERS, userId), { recursive: true });
 
             res.sendStatus(NO_CONTENT);
         } catch (e) {

@@ -1,8 +1,8 @@
-const { dataBaseEnum: { CAR_ASSOCIATION }, modelNamesEnum: { CAR }, tableNamesEnum: { CARS } } = require('../../constants');
+const { dateEnum: { NOW }, modelNamesEnum: { CAR_FILE }, tableNamesEnum: { CARS_FILES } } = require('../../constants');
 
 module.exports = (client, DataTypes) => {
     const Car = client.define(
-        CAR,
+        CAR_FILE,
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -11,30 +11,32 @@ module.exports = (client, DataTypes) => {
                 allowNull: false
             },
 
-            model: {
+            file: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
 
-            price: {
-                type: DataTypes.DECIMAL,
+            type: {
+                type: DataTypes.STRING,
                 allowNull: false
             },
 
-            year: {
+            car_id: {
                 type: DataTypes.INTEGER,
+                foreignKey: true,
                 allowNull: false
+            },
+
+            created_at: {
+                type: DataTypes.DATE,
+                defaultValue: client.fn(NOW)
             }
         },
         {
-            tableName: CARS,
+            tableName: CARS_FILES,
             timestamps: false
         }
     );
-
-    const Car_File = require('./Car_File')(client, DataTypes);
-
-    Car.hasMany(Car_File, CAR_ASSOCIATION);
 
     return Car;
 };

@@ -2,5 +2,6 @@ module.exports = {
     userService: require('./user'),
     carService: require('./car'),
     authService: require('./auth'),
-    emailService: require('./email')
+    emailService: require('./email'),
+    fileService: require('./file')
 };

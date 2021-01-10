@@ -3,9 +3,21 @@ const {
         BAD_REQUEST, FORBIDDEN, NOT_FOUND, UNAUTHORIZED
     },
     statusMessagesEnum: {
-        EMAIL_ALREADY_EXISTS, ID_NOT_FOUND, NO_TOKEN, NOT_VALID_ID, NOT_VALID_BODY, NOT_VALID_FILE_EXTENSION,
-        NOT_VALID_TOKEN, PERMISSION_DENIED, TOO_LARGE_FILE, USER_ALREADY_HAVE_SAME_CAR,
-        WRONG_EMAIL_OR_PASSWORD, WRONG_NUMBER_OF_IMAGES, WRONG_TEMPLATE_NAME
+        EMAIL_ALREADY_EXISTS,
+        ID_NOT_FOUND,
+        NO_TOKEN,
+        NOT_VALID_ID,
+        NOT_VALID_BODY,
+        NOT_VALID_FILE_EXTENSION,
+        NOT_VALID_TOKEN,
+        PERMISSION_DENIED,
+        TOO_LARGE_FILE,
+        USER_ALREADY_HAVE_SAME_CAR,
+        WRONG_EMAIL_OR_PASSWORD,
+        WRONG_NUMBER_OF_AVATAR,
+        WRONG_NUMBER_OF_DOCS,
+        WRONG_NUMBER_OF_IMGS,
+        WRONG_TEMPLATE_NAME
     }
 } = require('../constants');
 
@@ -46,8 +58,18 @@ module.exports = {
         code: BAD_REQUEST
     },
 
-    WRONG_NUMBER_OF_IMAGES: {
-        message: WRONG_NUMBER_OF_IMAGES,
+    WRONG_NUMBER_OF_AVATAR: {
+        message: WRONG_NUMBER_OF_AVATAR,
+        code: BAD_REQUEST
+    },
+
+    WRONG_NUMBER_OF_DOCS: {
+        message: WRONG_NUMBER_OF_DOCS,
+        code: BAD_REQUEST
+    },
+
+    WRONG_NUMBER_OF_IMGS: {
+        message: WRONG_NUMBER_OF_IMGS,
         code: BAD_REQUEST
     },
 

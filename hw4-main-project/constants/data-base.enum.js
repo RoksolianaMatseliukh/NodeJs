@@ -10,7 +10,13 @@ module.exports = {
     USER_ID: 'user_id',
 
     // association between tables
-    ASSOCIATION: {
+    CAR_ASSOCIATION: {
+        foreignKey: 'car_id',
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
+    },
+
+    USER_ASSOCIATION: {
         foreignKey: 'user_id',
         onDelete: 'cascade',
         onUpdate: 'cascade'

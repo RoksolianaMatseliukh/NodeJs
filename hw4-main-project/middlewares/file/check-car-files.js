@@ -32,8 +32,8 @@ module.exports = (req, res, next) => {
             }
         });
 
-        req.images = images;
         req.docs = docs;
+        req.images = images;
 
         next();
     } catch (e) {

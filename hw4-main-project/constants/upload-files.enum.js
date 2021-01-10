@@ -17,5 +17,9 @@ module.exports = {
         'image/png',
         'image/tiff',
         'image/webp'
-    ]
+    ],
+    FILE_TYPES: {
+        DOCUMENT: 'document',
+        IMAGE: 'image'
+    }
 };

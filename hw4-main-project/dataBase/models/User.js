@@ -1,4 +1,4 @@
-const { dataBaseEnum: { ASSOCIATION }, modelNamesEnum: { USER }, tableNamesEnum: { USERS } } = require('../../constants');
+const { dataBaseEnum: { USER_ASSOCIATION }, modelNamesEnum: { USER }, tableNamesEnum: { USERS } } = require('../../constants');
 
 module.exports = (client, DataTypes) => {
     const User = client.define(
@@ -44,7 +44,7 @@ module.exports = (client, DataTypes) => {
 
     const OAuth = require('./OAuth')(client, DataTypes);
 
-    User.hasOne(OAuth, ASSOCIATION);
+    User.hasOne(OAuth, USER_ASSOCIATION);
 
     return User;
 };

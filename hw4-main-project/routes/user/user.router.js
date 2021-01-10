@@ -12,8 +12,8 @@ userRouter.get('/',
     userController.getUsersWithCars);
 userRouter.post('/',
     userMiddlewares.checkIsUserValidToCreate,
-    fileMiddlewares.checkFile,
-    fileMiddlewares.checkAvatar,
+    fileMiddlewares.checkUserFiles,
+    fileMiddlewares.checkNumberOfUserAvatar,
     userMiddlewares.checkIfUserAlreadyExists,
     userController.createUser);
 
@@ -27,8 +27,8 @@ userRouter.use('/:userId',
     authMiddlewares.checkAccessToken);
 userRouter.put('/:userId',
     userMiddlewares.checkIsUserValidToEdit,
-    fileMiddlewares.checkFile,
-    fileMiddlewares.checkAvatar,
+    fileMiddlewares.checkUserFiles,
+    fileMiddlewares.checkNumberOfUserAvatar,
     userMiddlewares.checkIfUserAlreadyExists,
     userController.editUserById);
 userRouter.delete('/:userId', userController.deleteUserById);
