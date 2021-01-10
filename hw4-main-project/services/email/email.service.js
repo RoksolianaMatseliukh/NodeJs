@@ -29,7 +29,11 @@ const sendMail = async (userMail, action, context) => {
         const templateInfo = templatesInfo[action];
 
         if (!templateInfo) {
-            throw new ErrorHandler(WRONG_TEMPLATE_NAME.message, WRONG_TEMPLATE_NAME.code);
+            throw new ErrorHandler(
+                WRONG_TEMPLATE_NAME.message,
+                WRONG_TEMPLATE_NAME.code,
+                WRONG_TEMPLATE_NAME.customCode
+            );
         }
 
         const html = await emailTemplates.render(templateInfo.templateName, context);

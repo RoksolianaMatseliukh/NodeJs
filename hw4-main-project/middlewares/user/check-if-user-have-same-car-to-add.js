@@ -9,7 +9,11 @@ module.exports = async (req, res, next) => {
         const foundRelation = await userService.getRelationUserToCar(user_id, car_id);
 
         if (foundRelation) {
-            throw new ErrorHandler(USER_ALREADY_HAVE_SAME_CAR.message, USER_ALREADY_HAVE_SAME_CAR.code);
+            throw new ErrorHandler(
+                USER_ALREADY_HAVE_SAME_CAR.message,
+                USER_ALREADY_HAVE_SAME_CAR.code,
+                USER_ALREADY_HAVE_SAME_CAR.customCode
+            );
         }
 
         next();

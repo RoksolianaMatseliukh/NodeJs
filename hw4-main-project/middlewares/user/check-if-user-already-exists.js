@@ -10,7 +10,11 @@ module.exports = async (req, res, next) => {
             const [foundUser] = await userService.getUsers({ email });
 
             if (foundUser) {
-                throw new ErrorHandler(EMAIL_ALREADY_EXISTS.message, EMAIL_ALREADY_EXISTS.code);
+                throw new ErrorHandler(
+                    EMAIL_ALREADY_EXISTS.message,
+                    EMAIL_ALREADY_EXISTS.code,
+                    EMAIL_ALREADY_EXISTS.customCode
+                );
             }
         };
 

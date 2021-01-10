@@ -8,7 +8,11 @@ module.exports = async (req, res, next) => {
         const [foundUser] = await userService.getUsers({ email });
 
         if (!foundUser) {
-            throw new ErrorHandler(WRONG_EMAIL_OR_PASSWORD.message, WRONG_EMAIL_OR_PASSWORD.code);
+            throw new ErrorHandler(
+                WRONG_EMAIL_OR_PASSWORD.message,
+                WRONG_EMAIL_OR_PASSWORD.code,
+                WRONG_EMAIL_OR_PASSWORD.customCode
+            );
         }
 
         req.user = foundUser;

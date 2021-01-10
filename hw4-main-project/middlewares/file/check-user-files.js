@@ -12,12 +12,20 @@ module.exports = (req, res, next) => {
 
             if (IMGS_MIMETYPES.includes(mimetype)) {
                 if (size > IMG_MAX_SIZE) {
-                    throw new ErrorHandler(TOO_LARGE_FILE.message, TOO_LARGE_FILE.code);
+                    throw new ErrorHandler(
+                        TOO_LARGE_FILE.message,
+                        TOO_LARGE_FILE.code,
+                        TOO_LARGE_FILE.customCode
+                    );
                 }
 
                 images.push(file);
             } else {
-                throw new ErrorHandler(NOT_VALID_FILE_EXTENSION.message, NOT_VALID_FILE_EXTENSION.code);
+                throw new ErrorHandler(
+                    NOT_VALID_FILE_EXTENSION.message,
+                    NOT_VALID_FILE_EXTENSION.code,
+                    NOT_VALID_FILE_EXTENSION.customCode
+                );
             }
         });
 

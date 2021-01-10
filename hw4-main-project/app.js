@@ -25,7 +25,10 @@ app.use('*', notFoundRouter);
 app.use('*', (err, req, res, next) => {
     res
         .status(err.code || INTERNAL_SERVER_ERROR)
-        .json({ message: err.message });
+        .json({
+            customCode: err.customCode,
+            message: err.message
+        });
 });
 
 app.listen(PORT, (err) => (!err && console.log(`app ${PORT} in process`)));

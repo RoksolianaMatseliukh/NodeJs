@@ -1,14 +1,14 @@
 module.exports = {
     dataBaseEnum: require('./data-base.enum'),
+    dateEnum: require('./date.enum'),
+    emailActionsEnum: require('./email-actions.enum'),
+    folderNamesEnum: require('./folder-names.enum'),
+    JWTEnum: require('./JWT.enum'),
     modelNamesEnum: require('./model-names.enum'),
-    tableNamesEnum: require('./table-names.enum'),
+    regexpEnum: require('./regexp.enum'),
     statusCodesEnum: require('./status-codes.enum'),
     statusMessagesEnum: require('./status-messages.enum'),
-    regexpEnum: require('./regexp.enum'),
-    dateEnum: require('./date.enum'),
-    JWTEnum: require('./JWT.enum'),
     tableAttributesEnum: require('./table-attributes.enum'),
-    emailActionsEnum: require('./email-actions.enum'),
-    uploadFilesEnum: require('./upload-files.enum'),
-    folderNamesEnum: require('./folder-names.enum')
+    tableNamesEnum: require('./table-names.enum'),
+    uploadFilesEnum: require('./upload-files.enum')
 };

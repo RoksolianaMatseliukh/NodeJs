@@ -8,7 +8,11 @@ module.exports = async (req, res, next) => {
         const foundCar = await carService.getCarById(carId);
 
         if (!foundCar) {
-            throw new ErrorHandler(ENTITY_NOT_FOUND.message, ENTITY_NOT_FOUND.code);
+            throw new ErrorHandler(
+                ENTITY_NOT_FOUND.message,
+                ENTITY_NOT_FOUND.code,
+                ENTITY_NOT_FOUND.customCode
+            );
         }
 
         req.car = foundCar;

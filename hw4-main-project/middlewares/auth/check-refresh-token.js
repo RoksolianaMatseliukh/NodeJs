@@ -10,19 +10,31 @@ module.exports = async (req, res, next) => {
         const refresh_token = req.get(AUTHORIZATION);
 
         if (!refresh_token) {
-            throw new ErrorHandler(NO_TOKEN.message, NO_TOKEN.code);
+            throw new ErrorHandler(
+                NO_TOKEN.message,
+                NO_TOKEN.code,
+                NO_TOKEN.customCode
+            );
         }
 
         jwt.verify(refresh_token, REFRESH_TOKEN_SECRET, (err) => {
             if (err) {
-                throw new ErrorHandler(NOT_VALID_TOKEN.message, NOT_VALID_TOKEN.code);
+                throw new ErrorHandler(
+                    NOT_VALID_TOKEN.message,
+                    NOT_VALID_TOKEN.code,
+                    NOT_VALID_TOKEN.customCode
+                );
             }
         });
 
         const userWithToken = await authService.getUserWithTokenByParams({ refresh_token });
 
         if (!userWithToken) {
-            throw new ErrorHandler(NOT_VALID_TOKEN.message, NOT_VALID_TOKEN.code);
+            throw new ErrorHandler(
+                NOT_VALID_TOKEN.message,
+                NOT_VALID_TOKEN.code,
+                NOT_VALID_TOKEN.customCode
+            );
         }
 
         req.user = userWithToken;

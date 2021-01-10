@@ -58,7 +58,7 @@ module.exports = {
 
             await file.mv(path.join(filesFullDirPath, fileName));
 
-            await fileService.createCarFile({ file: filePath, type, car_id: id });
+            await fileService.createCarFile({ car_id: id, file: filePath, type });
         }));
     }
 };
