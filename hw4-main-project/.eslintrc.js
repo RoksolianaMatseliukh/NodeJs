@@ -134,6 +134,7 @@ module.exports = {
                 ignoreMemberSort: false,
             },
         ],
+        'sort-keys': 'warn',
         'space-before-function-paren': [
             'error',
             {
