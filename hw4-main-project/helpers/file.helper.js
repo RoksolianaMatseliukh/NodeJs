@@ -51,14 +51,16 @@ module.exports = {
 
         await fs.mkdir(filesFullDirPath, { recursive: true });
 
-        await Promise.all(files.map(async (file) => {
+        const promises = files.map(async (file) => {
             const fileExtension = file.name.split('.').pop();
             const fileName = `${uuid.v1()}.${fileExtension}`;
             const filePath = path.join(filesDirPath, fileName);
 
             await file.mv(path.join(filesFullDirPath, fileName));
 
-            await fileService.createCarFile({ car_id: id, file: filePath, type });
-        }));
+            return fileService.createCarFile({ car_id: id, file: filePath, type });
+        });
+
+        await Promise.allSettled(promises);
     }
 };

@@ -23,7 +23,7 @@ module.exports = {
             limit
         });
 
-        users = await Promise.all(users.map(async (user) => {
+        const promises = users.map(async (user) => {
             const relations = await UserWithCarModel.findAll({
                 where: {
                     user_id: user.id
@@ -42,7 +42,9 @@ module.exports = {
             });
 
             return Object.assign(user.dataValues, { cars });
-        }));
+        });
+
+        users = await Promise.all(promises);
 
         return users;
     },
