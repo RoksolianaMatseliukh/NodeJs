@@ -34,6 +34,7 @@ module.exports = {
                 avatar,
                 body: { name, email, password }
             } = req;
+
             const hashedPassword = await hash(password);
 
             const { id } = await userService.createUser({ ...req.body, password: hashedPassword });
@@ -53,8 +54,10 @@ module.exports = {
 
     addCarToUser: async (req, res, next) => {
         try {
-            const { userId: user_id } = req.params;
-            const { car_id } = req.body;
+            const {
+                body: { car_id },
+                params: { userId: user_id }
+            } = req;
 
             await userService.addCarToUser({ user_id, car_id });
 
@@ -86,8 +89,10 @@ module.exports = {
 
     deleteUserById: async (req, res, next) => {
         try {
-            const { userId } = req.params;
-            const { name, email } = req.user;
+            const {
+                params: { userId },
+                user: { name, email }
+            } = req;
 
             await userService.deleteUserById(userId);
             await emailService.sendMail(email, RESTORE_ACCOUNT, { userName: name });

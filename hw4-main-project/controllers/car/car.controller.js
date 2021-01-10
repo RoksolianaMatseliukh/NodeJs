@@ -35,9 +35,9 @@ module.exports = {
 
     createCar: async (req, res, next) => {
         try {
-            const { docs, images } = req;
+            const { body, docs, images } = req;
 
-            const { id } = await carService.createCar(req.body);
+            const { id } = await carService.createCar(body);
 
             if (docs.length) {
                 await fileHelper.carFileCreator(docs, id, DOCS, DOCUMENT);
@@ -55,9 +55,11 @@ module.exports = {
 
     editCarById: async (req, res, next) => {
         try {
-            const { docs, images, params: { carId } } = req;
+            const {
+                body, docs, images, params: { carId }
+            } = req;
 
-            await carService.editCarById(carId, req.body);
+            await carService.editCarById(carId, body);
 
             if (docs.length) {
                 await fileHelper.carFileCreator(docs, carId, DOCS, DOCUMENT);
