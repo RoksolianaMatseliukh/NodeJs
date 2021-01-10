@@ -20,6 +20,10 @@ module.exports = {
                 allowNull: false
             },
 
+            avatar: {
+                type: Sequelize.DataTypes.STRING
+            },
+
             email: {
                 type: Sequelize.DataTypes.STRING,
                 allowNull: false,

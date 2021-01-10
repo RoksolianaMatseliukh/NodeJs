@@ -27,6 +27,8 @@ userRouter.use('/:userId',
     authMiddlewares.checkAccessToken);
 userRouter.put('/:userId',
     userMiddlewares.checkIsUserValidToEdit,
+    fileMiddlewares.checkFile,
+    fileMiddlewares.checkAvatar,
     userMiddlewares.checkIfUserAlreadyExists,
     userController.editUserById);
 userRouter.delete('/:userId', userController.deleteUserById);

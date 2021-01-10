@@ -21,6 +21,10 @@ module.exports = (client, DataTypes) => {
                 allowNull: false
             },
 
+            avatar: {
+                type: DataTypes.STRING
+            },
+
             email: {
                 type: DataTypes.STRING,
                 allowNull: false,

@@ -1,13 +1,13 @@
 const { ErrorHandler, customErrors: { NOT_VALID_FILE_EXTENSION, TOO_LARGE_FILE } } = require('../../errors');
 const {
     uploadFilesEnum: {
-        IMAGE_MAX_SIZE, DOC_MAX_SIZE, DOCS_MIMETYPES, IMAGES_MIMETYPES
+        IMG_MAX_SIZE, DOC_MAX_SIZE, DOCS_MIMETYPES, IMGS_MIMETYPES
     }
 } = require('../../constants');
 
 module.exports = (req, res, next) => {
     try {
-        const files = Object.values(req.files);
+        const files = Object.values(req.files || {});
 
         const docs = [];
         const images = [];
@@ -21,8 +21,8 @@ module.exports = (req, res, next) => {
                 }
 
                 docs.push(file);
-            } else if (IMAGES_MIMETYPES.includes(mimetype)) {
-                if (size > IMAGE_MAX_SIZE) {
+            } else if (IMGS_MIMETYPES.includes(mimetype)) {
+                if (size > IMG_MAX_SIZE) {
                     throw new ErrorHandler(TOO_LARGE_FILE.message, TOO_LARGE_FILE.code);
                 }
 

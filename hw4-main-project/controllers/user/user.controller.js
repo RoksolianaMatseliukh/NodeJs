@@ -1,4 +1,9 @@
+const fs = require('fs-extra').promises;
+const path = require('path');
+const uuid = require('uuid').v1();
+
 const { emailActionsEnum: { ACTIVATE_ACCOUNT, RESTORE_ACCOUNT } } = require('../../constants');
+const { folderNamesEnum: { AVATAR, PUBLIC, USERS } } = require('../../constants');
 const { passwordHelper: { hash } } = require('../../helpers');
 const {
     statusCodesEnum: { CREATED, NO_CONTENT },
@@ -25,10 +30,29 @@ module.exports = {
 
     createUser: async (req, res, next) => {
         try {
-            const { name, email, password } = req.body;
+            const {
+                avatar,
+                body: { name, email, password }
+            } = req;
             const hashedPassword = await hash(password);
 
-            await userService.createUser({ ...req.body, password: hashedPassword });
+            const { id } = await userService.createUser({ ...req.body, password: hashedPassword });
+
+            if (avatar) {
+                const avatarDirPath = path.join(USERS, `${id}`, AVATAR);
+                const avatarFullDirPath = path.join(process.cwd(), PUBLIC, avatarDirPath);
+
+                const avatarExtension = avatar.name.split('.').pop();
+
+                const avatarName = `${uuid}.${avatarExtension}`;
+                const avatarPath = path.join(avatarDirPath, avatarName);
+
+                await fs.mkdir(avatarFullDirPath, { recursive: true });
+                await avatar.mv(path.join(avatarFullDirPath, avatarName));
+
+                await userService.editUserById(id, { avatar: avatarPath });
+            }
+
             await emailService.sendMail(email, ACTIVATE_ACCOUNT, { userName: name });
 
             res.status(CREATED).json(ENTITY_CREATED);
@@ -45,6 +69,42 @@ module.exports = {
             await userService.addCarToUser({ user_id, car_id });
 
             res.json(CAR_ADDED_TO_USER);
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    editUserById: async (req, res, next) => {
+        try {
+            const {
+                avatar,
+                params: { userId },
+                user: { avatar: existingAvatarPath }
+            } = req;
+
+            if (avatar) {
+                const avatarDirPath = path.join(USERS, `${userId}`, AVATAR);
+                const avatarFullDirPath = path.join(process.cwd(), PUBLIC, avatarDirPath);
+
+                const avatarExtension = avatar.name.split('.').pop();
+
+                const avatarName = `${uuid}.${avatarExtension}`;
+                const avatarPath = path.join(avatarDirPath, avatarName);
+
+                if (!existingAvatarPath) {
+                    await fs.mkdir(avatarFullDirPath, { recursive: true });
+                } else {
+                    await fs.unlink(path.join(process.cwd(), PUBLIC, existingAvatarPath));
+                }
+
+                await avatar.mv(path.join(avatarFullDirPath, avatarName));
+
+                req.body.avatar = avatarPath;
+            }
+
+            await userService.editUserById(userId, req.body);
+
+            res.status(CREATED).json(ENTITY_EDITED);
         } catch (e) {
             next(e);
         }
@@ -71,18 +131,6 @@ module.exports = {
             await userService.deleteCarFromUser(user_id, car_id);
 
             res.sendStatus(NO_CONTENT);
-        } catch (e) {
-            next(e);
-        }
-    },
-
-    editUserById: async (req, res, next) => {
-        try {
-            const { userId } = req.params;
-
-            await userService.editUserById(userId, req.body);
-
-            res.status(CREATED).json(ENTITY_EDITED);
         } catch (e) {
             next(e);
         }
