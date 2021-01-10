@@ -1,6 +1,6 @@
 const fs = require('fs-extra').promises;
 const path = require('path');
-const uuid = require('uuid').v1();
+const uuid = require('uuid');
 
 const { fileService } = require('../services');
 const {
@@ -16,7 +16,7 @@ module.exports = {
 
         const avatarExtension = avatar.name.split('.').pop();
 
-        const avatarName = `${uuid}.${avatarExtension}`;
+        const avatarName = `${uuid.v1()}.${avatarExtension}`;
         const avatarPath = path.join(avatarDirPath, avatarName);
 
         await fs.mkdir(avatarFullDirPath, { recursive: true });
@@ -31,7 +31,7 @@ module.exports = {
 
         const avatarExtension = avatar.name.split('.').pop();
 
-        const avatarName = `${uuid}.${avatarExtension}`;
+        const avatarName = `${uuid.v1()}.${avatarExtension}`;
         const avatarPath = path.join(avatarDirPath, avatarName);
 
         if (!existingAvatarPath) {
@@ -53,7 +53,7 @@ module.exports = {
 
         await Promise.all(files.map(async (file) => {
             const fileExtension = file.name.split('.').pop();
-            const fileName = `${uuid}.${fileExtension}`;
+            const fileName = `${uuid.v1()}.${fileExtension}`;
             const filePath = path.join(filesDirPath, fileName);
 
             await file.mv(path.join(filesFullDirPath, fileName));
