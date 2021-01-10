@@ -3,6 +3,7 @@ module.exports = {
     IMG_MAX_SIZE: 2 * 1024 * 1024,
     MAX_DOCS_NUMBER: 10,
     MAX_IMGS_NUMBER: 10,
+
     DOCS_MIMETYPES: [
         'application/pdf',
         'application/msword',
@@ -10,6 +11,7 @@ module.exports = {
         'application/vnd.ms-excel',
         'application/vnd.oasis.opendocument.text'
     ],
+
     IMGS_MIMETYPES: [
         'image/gif',
         'image/jpeg',
@@ -18,6 +20,7 @@ module.exports = {
         'image/tiff',
         'image/webp'
     ],
+
     FILE_TYPES: {
         DOCUMENT: 'document',
         IMAGE: 'image'
