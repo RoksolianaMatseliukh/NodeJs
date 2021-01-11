@@ -13,7 +13,7 @@ const {
     statusMessagesEnum: { ENTITY_CREATED, ENTITY_EDITED },
     uploadFilesEnum: { FILE_TYPES: { DOCUMENT, IMAGE } }
 } = require('../../constants');
-const transactionInstance = require('../../dataBase/create-transactions');
+const { transactionInstance } = require('../../dataBase').getInstance();
 
 module.exports = {
     getCars: async (req, res, next) => {

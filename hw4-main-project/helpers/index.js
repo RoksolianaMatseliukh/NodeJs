@@ -1,5 +1,5 @@
 module.exports = {
+    fileHelper: require('./file.helper'),
     passwordHelper: require('./password.helper'),
-    tokenizer: require('./tokenizer'),
-    fileHelper: require('./file.helper')
+    tokenizer: require('./tokenizer')
 };

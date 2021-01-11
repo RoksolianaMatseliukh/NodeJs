@@ -10,7 +10,7 @@ const {
     statusCodesEnum: { CREATED, NO_CONTENT },
     statusMessagesEnum: { CAR_ADDED_TO_USER, ENTITY_EDITED, ENTITY_CREATED }
 } = require('../../constants');
-const transactionInstance = require('../../dataBase/create-transactions');
+const { transactionInstance } = require('../../dataBase').getInstance();
 
 module.exports = {
     getUsersWithCars: (req, res, next) => {
