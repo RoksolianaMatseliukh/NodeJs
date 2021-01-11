@@ -4,11 +4,9 @@ const { authService } = require('../services');
 const { dateEnum: { FULL_CURRENT_TIME }, JWTEnum: { D10_IN_MS } } = require('../constants');
 
 module.exports = async () => {
-    const timeDifference = new Date(new Date() - D10_IN_MS);
-
     const numOfDeletedTokenPairs = await authService.deleteTokenPair({
         created_at: {
-            [Op.lte]: timeDifference
+            [Op.lte]: new Date(new Date() - D10_IN_MS)
         }
     });
 
