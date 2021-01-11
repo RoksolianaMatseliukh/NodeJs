@@ -1,22 +1,16 @@
-const jwt = require('jsonwebtoken');
+const { Sequelize: { Op } } = require('sequelize');
 
-const { appConfigs: { REFRESH_TOKEN_SECRET } } = require('../configs');
 const { authService } = require('../services');
-const { dateEnum: { FULL_CURRENT_TIME } } = require('../constants');
+const { dateEnum: { FULL_CURRENT_TIME }, JWTEnum: { D10_IN_MS } } = require('../constants');
 
 module.exports = async () => {
-    const tokens = await authService.getTokens();
+    const timeDifference = new Date(new Date() - D10_IN_MS);
 
-    let deletedTokens = 0;
-
-    tokens.forEach(({ refresh_token }) => {
-        jwt.verify(refresh_token, REFRESH_TOKEN_SECRET, (err) => {
-            if (err) {
-                authService.deleteTokenPair({ refresh_token });
-                deletedTokens++;
-            }
-        });
+    const numOfDeletedTokenPairs = await authService.deleteTokenPair({
+        created_at: {
+            [Op.lte]: timeDifference
+        }
     });
 
-    console.log(`at ${FULL_CURRENT_TIME} was deleted - ${deletedTokens} token pairs`);
+    console.log(`at ${FULL_CURRENT_TIME} was deleted - ${numOfDeletedTokenPairs} token pairs`);
 };

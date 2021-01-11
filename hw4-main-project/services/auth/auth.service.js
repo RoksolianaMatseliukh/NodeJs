@@ -2,16 +2,10 @@ const db = require('../../dataBase').getInstance();
 const { modelNamesEnum: { OAUTH, USER } } = require('../../constants');
 
 module.exports = {
-    getTokens: () => {
+    createTokenPair: async (token_pair, transaction) => {
         const OAuthModel = db.getModel(OAUTH);
 
-        return OAuthModel.findAll();
-    },
-
-    createTokenPair: (token_pair, transaction) => {
-        const OAuthModel = db.getModel(OAUTH);
-
-        return OAuthModel.create(token_pair, { transaction });
+        await OAuthModel.create(token_pair, { transaction });
     },
 
     getUserWithTokenByParams: (params) => {
