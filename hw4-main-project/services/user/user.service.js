@@ -97,10 +97,10 @@ module.exports = {
         });
     },
 
-    createUser: (user) => {
+    createUser: (user, transaction) => {
         const UserModel = db.getModel(USER);
 
-        return UserModel.create(user);
+        return UserModel.create(user, { transaction });
     },
 
     addCarToUser: async (car_user_ids) => {
@@ -109,19 +109,21 @@ module.exports = {
         await UserWithCarModel.create(car_user_ids);
     },
 
-    editUserById: async (id, editedUser) => {
+    editUserById: async (id, editedUser, transaction) => {
         const UserModel = db.getModel(USER);
 
         await UserModel.update(editedUser, {
-            where: { id }
+            where: { id },
+            transaction
         });
     },
 
-    deleteUserById: async (id) => {
+    deleteUserById: async (id, transaction) => {
         const UserModel = db.getModel(USER);
 
         await UserModel.destroy({
-            where: { id }
+            where: { id },
+            transaction
         });
     },
 

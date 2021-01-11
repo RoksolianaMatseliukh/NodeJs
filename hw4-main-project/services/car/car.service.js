@@ -18,17 +18,18 @@ module.exports = {
         });
     },
 
-    createCar: (car) => {
+    createCar: (car, transaction) => {
         const CarModel = db.getModel(CAR);
 
-        return CarModel.create(car);
+        return CarModel.create(car, { transaction });
     },
 
-    editCarById: async (id, editedCar) => {
+    editCarById: async (id, editedCar, transaction) => {
         const CarModel = db.getModel(CAR);
 
         await CarModel.update(editedCar, {
-            where: { id }
+            where: { id },
+            transaction
         });
     },
 

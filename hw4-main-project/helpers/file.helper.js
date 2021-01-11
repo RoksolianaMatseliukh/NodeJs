@@ -45,7 +45,7 @@ module.exports = {
         return avatarPath;
     },
 
-    carFileCreator: async (files, id, folder, type) => {
+    carFileCreator: async (files, id, folder, type, transaction) => {
         const filesDirPath = path.join(CARS, id, folder);
         const filesFullDirPath = path.join(process.cwd(), PUBLIC, filesDirPath);
 
@@ -58,7 +58,7 @@ module.exports = {
 
             file.mv(path.join(filesFullDirPath, fileName));
 
-            return fileService.createCarFile({ car_id: id, file: filePath, type });
+            return fileService.createCarFile({ car_id: id, file: filePath, type }, transaction);
         });
 
         await Promise.allSettled(promises);

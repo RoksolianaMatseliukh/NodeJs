@@ -13,6 +13,7 @@ const {
     statusMessagesEnum: { ENTITY_CREATED, ENTITY_EDITED },
     uploadFilesEnum: { FILE_TYPES: { DOCUMENT, IMAGE } }
 } = require('../../constants');
+const transactionInstance = require('../../dataBase/create-transactions');
 
 module.exports = {
     getCars: async (req, res, next) => {
@@ -34,43 +35,55 @@ module.exports = {
     },
 
     createCar: async (req, res, next) => {
+        const transaction = await transactionInstance();
+
         try {
             const { body, docs, images } = req;
 
-            const { id } = await carService.createCar(body);
+            const { id } = await carService.createCar(body, transaction);
 
             if (docs.length) {
-                await fileHelper.carFileCreator(docs, id, DOCS, DOCUMENT);
+                await fileHelper.carFileCreator(docs, id, DOCS, DOCUMENT, transaction);
             }
 
             if (images.length) {
-                await fileHelper.carFileCreator(images, id, IMAGES, IMAGE);
+                await fileHelper.carFileCreator(images, id, IMAGES, IMAGE, transaction);
             }
+
+            await transaction.commit();
 
             res.status(CREATED).json(ENTITY_CREATED);
         } catch (e) {
+            await transaction.rollback();
+
             next(e);
         }
     },
 
     editCarById: async (req, res, next) => {
+        const transaction = await transactionInstance();
+
         try {
             const {
                 body, docs, images, params: { carId }
             } = req;
 
-            await carService.editCarById(carId, body);
+            await carService.editCarById(carId, body, transaction);
 
             if (docs.length) {
-                await fileHelper.carFileCreator(docs, carId, DOCS, DOCUMENT);
+                await fileHelper.carFileCreator(docs, carId, DOCS, DOCUMENT, transaction);
             }
 
             if (images.length) {
-                await fileHelper.carFileCreator(images, carId, IMAGES, IMAGE);
+                await fileHelper.carFileCreator(images, carId, IMAGES, IMAGE, transaction);
             }
+
+            await transaction.commit();
 
             res.status(CREATED).json(ENTITY_EDITED);
         } catch (e) {
+            await transaction.rollback();
+
             next(e);
         }
     },
