@@ -1,5 +1,6 @@
 module.exports = {
     appSettingsEnum: require('./app-settings.enum'),
+    cronScheduleEnum: require('./cron-schedule.enum'),
     dataBaseEnum: require('./data-base.enum'),
     dateEnum: require('./date.enum'),
     emailActionsEnum: require('./email-actions.enum'),
