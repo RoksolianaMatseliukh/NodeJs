@@ -11,7 +11,7 @@ const {
 
 module.exports = {
     addAvatarToUser: async (avatar, id) => {
-        const avatarDirPath = path.join(USERS, id, AVATAR);
+        const avatarDirPath = path.join(USERS, `${id}`, AVATAR);
         const avatarFullDirPath = path.join(process.cwd(), PUBLIC, avatarDirPath);
 
         const avatarExtension = avatar.name.split('.').pop();
@@ -26,7 +26,7 @@ module.exports = {
     },
 
     changeUserAvatar: async (avatar, existingAvatarPath, id) => {
-        const avatarDirPath = path.join(USERS, id, AVATAR);
+        const avatarDirPath = path.join(USERS, `${id}`, AVATAR);
         const avatarFullDirPath = path.join(process.cwd(), PUBLIC, avatarDirPath);
 
         const avatarExtension = avatar.name.split('.').pop();
@@ -46,7 +46,7 @@ module.exports = {
     },
 
     carFileCreator: async (files, id, folder, type) => {
-        const filesDirPath = path.join(CARS, id, folder);
+        const filesDirPath = path.join(CARS, `${id}`, folder);
         const filesFullDirPath = path.join(process.cwd(), PUBLIC, filesDirPath);
 
         await fs.mkdir(filesFullDirPath, { recursive: true });

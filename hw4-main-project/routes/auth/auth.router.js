@@ -14,6 +14,7 @@ userRouter.post('/',
 userRouter.post('/refresh',
     authMiddlewares.checkRefreshToken,
     authController.createNewTokenPair);
+
 userRouter.post('/logout', authController.logout);
 
 module.exports = userRouter;

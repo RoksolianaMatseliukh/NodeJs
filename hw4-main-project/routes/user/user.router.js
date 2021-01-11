@@ -39,6 +39,7 @@ userRouter.post('/:userId',
     carMiddlewares.checkIfCarExists,
     userMiddlewares.checkIfUserHaveSameCarToAdd,
     userController.addCarToUser);
+
 // delete car from user
 userRouter.delete('/:userId/:carId',
     userMiddlewares.checkIsIdValid,

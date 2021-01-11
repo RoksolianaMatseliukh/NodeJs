@@ -1,6 +1,6 @@
 const { ErrorHandler } = require('../../errors');
-const { statusCodesEnum: { BAD_REQUEST } } = require('../../constants');
 const { carValidators: { optionalCarFieldsValidator } } = require('../../validators');
+const { statusCodesEnum: { BAD_REQUEST } } = require('../../constants');
 
 module.exports = (req, res, next) => {
     try {

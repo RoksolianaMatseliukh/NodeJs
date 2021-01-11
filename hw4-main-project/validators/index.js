@@ -1,6 +1,6 @@
 module.exports = {
+    authValidators: require('./auth'),
     carValidators: require('./car'),
-    userValidators: require('./user'),
     commonValidators: require('./common'),
-    authValidators: require('./auth')
+    userValidators: require('./user')
 };

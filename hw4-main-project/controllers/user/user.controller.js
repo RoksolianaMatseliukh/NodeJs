@@ -2,6 +2,7 @@ const fs = require('fs-extra').promises;
 const path = require('path');
 
 const { emailActionsEnum: { ACTIVATE_ACCOUNT, RESTORE_ACCOUNT } } = require('../../constants');
+const { emailService, userService } = require('../../services');
 const { fileHelper } = require('../../helpers');
 const { folderNamesEnum: { PUBLIC, USERS } } = require('../../constants');
 const { passwordHelper: { hash } } = require('../../helpers');
@@ -9,7 +10,6 @@ const {
     statusCodesEnum: { CREATED, NO_CONTENT },
     statusMessagesEnum: { CAR_ADDED_TO_USER, ENTITY_EDITED, ENTITY_CREATED }
 } = require('../../constants');
-const { emailService, userService } = require('../../services');
 
 module.exports = {
     getUsersWithCars: (req, res, next) => {
