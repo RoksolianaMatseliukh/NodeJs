@@ -9,12 +9,14 @@ module.exports = async () => {
 
     let deletedTokens = 0;
 
-    tokens.map(({ refresh_token }) => jwt.verify(refresh_token, REFRESH_TOKEN_SECRET, (err) => {
-        if (err) {
-            authService.deleteTokenPair({ refresh_token });
-            deletedTokens++;
-        }
-    }));
+    tokens.forEach(({ refresh_token }) => {
+        jwt.verify(refresh_token, REFRESH_TOKEN_SECRET, (err) => {
+            if (err) {
+                authService.deleteTokenPair({ refresh_token });
+                deletedTokens++;
+            }
+        });
+    });
 
     console.log(`at ${FULL_CURRENT_TIME} was deleted - ${deletedTokens} token pairs`);
 };
