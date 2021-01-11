@@ -1,18 +1,10 @@
 const cron = require('node-cron');
 
-const { cronScheduleEnum: { EVERY_SEC } } = require('../constants');
-const calc = require('./calculate-shop-info');
+const { cronScheduleEnum: { EVERY_DAY_AT_4_AM } } = require('../constants');
+const refreshTokenControl = require('./refresh-token-control');
 
 module.exports = () => {
-    cron.schedule(EVERY_SEC, async () => {
-        console.log('iteration start');
-        await calc();
-        console.log('iteration finish');
+    cron.schedule(EVERY_DAY_AT_4_AM, async () => {
+        await refreshTokenControl();
     });
-
-    // cron.schedule(EVERY_SEC, async () => {
-    //     console.log('iteration start');
-    //     await calc();
-    //     console.log('iteration finish');
-    // });
 };

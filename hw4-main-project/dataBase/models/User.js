@@ -44,7 +44,7 @@ module.exports = (client, DataTypes) => {
 
     const OAuth = require('./OAuth')(client, DataTypes);
 
-    User.hasOne(OAuth, USER_ASSOCIATION);
+    User.hasMany(OAuth, USER_ASSOCIATION);
 
     return User;
 };

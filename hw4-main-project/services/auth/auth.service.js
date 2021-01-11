@@ -2,6 +2,12 @@ const db = require('../../dataBase').getInstance();
 const { modelNamesEnum: { OAUTH, USER } } = require('../../constants');
 
 module.exports = {
+    getTokens: () => {
+        const OAuthModel = db.getModel(OAUTH);
+
+        return OAuthModel.findAll();
+    },
+
     createTokenPair: (token_pair, transaction) => {
         const OAuthModel = db.getModel(OAUTH);
 

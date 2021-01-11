@@ -1,3 +1,3 @@
 module.exports = {
-    EVERY_SEC: '* * * * * *'
+    EVERY_DAY_AT_4_AM: '0 4 * * *'
 };
