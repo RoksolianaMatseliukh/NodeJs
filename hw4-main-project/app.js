@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const { apiRouter, notFoundRouter } = require('./routes');
 const { appConfigs: { PORT } } = require('./configs');
-const cronRun = require('./cron-jobs');
+// const cronRun = require('./cron-jobs');
 const db = require('./dataBase').getInstance();
 const {
     appSettingsEnum: { DEV },
@@ -42,6 +42,6 @@ app.use('*', (err, req, res, next) => {
 app.listen(PORT, (err) => {
     if (!err) {
         console.log(`app ${PORT} in process`);
-        cronRun();
+        // cronRun();
     }
 });
