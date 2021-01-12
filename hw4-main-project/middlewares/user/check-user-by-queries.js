@@ -1,41 +1,18 @@
-const {
-    commonValidators: { numericalFieldValidator },
-    userValidators: { optionalUserFieldsValidator }
-} = require('../../validators');
 const { statusMessagesEnum: { NO_ENTITY_FOUND } } = require('../../constants');
 const { tableAttributesEnum: { EMAIL, PASSWORD } } = require('../../constants');
+const { userQueryBuilder } = require('../../helpers');
 const { userService } = require('../../services');
 
 module.exports = async (req, res, next) => {
     try {
-        // eslint-disable-next-line prefer-const
-        let { page, limit, ...queries } = req.query;
+        const { offset, limit, ...where } = await userQueryBuilder(req.query);
 
-        const { error: pageErr } = numericalFieldValidator.validate(+page);
-        const { error: limitErr } = numericalFieldValidator.validate(+limit);
-        const { error } = optionalUserFieldsValidator.validate(queries);
+        const foundUsers = await userService.getUsers(where, offset, limit, EMAIL, PASSWORD);
 
-        if (pageErr) {
-            page = 1;
-        }
-
-        if (limitErr) {
-            limit = await userService.getNumberOfUsers();
-        }
-
-        if (error) {
-            const [{ message }] = error.details;
-            req.message = message;
+        if (!foundUsers.length) {
+            req.message = NO_ENTITY_FOUND;
         } else {
-            const offset = limit * (page - 1);
-
-            const foundUsers = await userService.getUsers(queries, offset, +limit, EMAIL, PASSWORD);
-
-            if (!foundUsers.length) {
-                req.message = NO_ENTITY_FOUND;
-            } else {
-                req.users = foundUsers;
-            }
+            req.users = foundUsers;
         }
 
         next();

@@ -1,10 +1,10 @@
 const { ErrorHandler } = require('../../errors');
 const { statusCodesEnum: { BAD_REQUEST } } = require('../../constants');
-const { userValidators: { optionalUserFieldsValidator } } = require('../../validators');
+const { userValidators: { editUserFieldsValidator } } = require('../../validators');
 
 module.exports = (req, res, next) => {
     try {
-        const { error } = optionalUserFieldsValidator.validate(req.body);
+        const { error } = editUserFieldsValidator.validate(req.body);
 
         if (error) {
             const [{ message }] = error.details;

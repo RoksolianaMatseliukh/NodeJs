@@ -9,14 +9,14 @@ const {
 } = require('../../constants');
 
 module.exports = {
-    getUsers: async (queries, offset, limit, ...fieldsToExclude) => {
+    getUsers: async (where, offset, limit, ...fieldsToExclude) => {
         const UserModel = db.getModel(USER);
         const UserWithCarModel = db.getModel(USER_WITH_CAR);
         const CarModel = db.getModel(CAR);
         const CarFileModel = db.getModel(CAR_FILE);
 
         let users = await UserModel.findAll({
-            where: queries,
+            where,
             attributes: { exclude: fieldsToExclude },
             order: literal(AGE),
             offset,

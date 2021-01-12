@@ -2,11 +2,16 @@ const db = require('../../dataBase').getInstance();
 const { modelNamesEnum: { CAR, CAR_FILE } } = require('../../constants');
 
 module.exports = {
-    getCars: () => {
+    getCars: (where, offset, limit) => {
         const CarModel = db.getModel(CAR);
         const CarFileModel = db.getModel(CAR_FILE);
 
-        return CarModel.findAll({ include: CarFileModel });
+        return CarModel.findAll({
+            where,
+            include: CarFileModel,
+            offset,
+            limit
+        });
     },
 
     getCarById: (id) => {
@@ -41,5 +46,11 @@ module.exports = {
         await CarModel.destroy({
             where: { id }
         });
+    },
+
+    getNumberOfCars: () => {
+        const CarModel = db.getModel(CAR);
+
+        return CarModel.count();
     }
 };

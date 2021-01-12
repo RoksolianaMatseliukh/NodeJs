@@ -10,5 +10,5 @@ module.exports = async () => {
         }
     });
 
-    console.log(`at ${FULL_CURRENT_TIME} was deleted - ${numOfDeletedTokenPairs} token pairs`);
+    console.log(`on ${FULL_CURRENT_TIME} was deleted - ${numOfDeletedTokenPairs} token pairs`);
 };

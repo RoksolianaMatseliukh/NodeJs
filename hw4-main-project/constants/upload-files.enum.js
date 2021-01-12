@@ -1,6 +1,7 @@
 module.exports = {
     DOC_MAX_SIZE: 5 * 1024 * 1024,
     IMG_MAX_SIZE: 2 * 1024 * 1024,
+
     MAX_DOCS_NUMBER: 10,
     MAX_IMGS_NUMBER: 10,
 

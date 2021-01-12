@@ -9,7 +9,7 @@ const userRouter = Router();
 
 userRouter.get('/',
     userMiddlewares.checkUserByQueries,
-    userController.getUsersWithCars);
+    userController.getUsers);
 userRouter.post('/',
     userMiddlewares.checkIsUserValidToCreate,
     fileMiddlewares.checkUserFiles,

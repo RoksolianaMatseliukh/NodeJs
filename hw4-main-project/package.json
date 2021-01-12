@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "dayjs": "^1.10.3",
     "dotenv": "^8.2.0",
     "email-templates": "^8.0.2",
     "express": "^4.17.1",

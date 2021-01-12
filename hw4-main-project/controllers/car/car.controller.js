@@ -16,11 +16,9 @@ const {
 const { transactionInstance } = require('../../dataBase').getInstance();
 
 module.exports = {
-    getCars: async (req, res, next) => {
+    getCars: (req, res, next) => {
         try {
-            const cars = await carService.getCars();
-
-            res.json(cars);
+            res.json(req.message || req.cars);
         } catch (e) {
             next(e);
         }

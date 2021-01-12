@@ -1,4 +1,4 @@
 module.exports = {
-    newUserValidator: require('./new-user.validator'),
-    optionalUserFieldsValidator: require('./optional-user-fields.validator')
+    editUserFieldsValidator: require('./edit-user-fields.validator'),
+    newUserValidator: require('./new-user.validator')
 };

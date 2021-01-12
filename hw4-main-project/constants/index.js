@@ -6,6 +6,7 @@ module.exports = {
     emailActionsEnum: require('./email-actions.enum'),
     folderNamesEnum: require('./folder-names.enum'),
     JWTEnum: require('./JWT.enum'),
+    logActionsEnum: require('./log-actions.enum'),
     modelNamesEnum: require('./model-names.enum'),
     regexpEnum: require('./regexp.enum'),
     statusCodesEnum: require('./status-codes.enum'),

@@ -48,8 +48,8 @@ app.listen(PORT, () => {
 });
 
 function _mongoConnection() {
-    const mongo = mongoose.connect(`${MONGOOSE_LOCALHOST}${DATABASE_NAME}`, { useNewUrlParser: true });
-    const connect = mongo.connection;
+    mongoose.connect(`${MONGOOSE_LOCALHOST}${DATABASE_NAME}`, { useNewUrlParser: true });
+    const connect = mongoose.connection;
 
     connect.on(ERROR, (error) => {
         console.log(error);

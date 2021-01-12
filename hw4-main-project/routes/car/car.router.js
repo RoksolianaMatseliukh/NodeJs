@@ -5,7 +5,9 @@ const { carMiddlewares, fileMiddlewares, userMiddlewares } = require('../../midd
 
 const carRouter = Router();
 
-carRouter.get('/', carController.getCars);
+carRouter.get('/',
+    carMiddlewares.checkCarByQueries,
+    carController.getCars);
 carRouter.post('/',
     carMiddlewares.checkIsCarValidToCreate,
     fileMiddlewares.checkCarFiles,

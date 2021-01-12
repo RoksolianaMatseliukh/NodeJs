@@ -2,18 +2,27 @@ const fs = require('fs-extra').promises;
 const path = require('path');
 
 const { emailActionsEnum: { ACTIVATE_ACCOUNT, RESTORE_ACCOUNT } } = require('../../constants');
-const { emailService, userService } = require('../../services');
+const { emailService, logService, userService } = require('../../services');
 const { fileHelper } = require('../../helpers');
 const { folderNamesEnum: { PUBLIC, USERS } } = require('../../constants');
 const { passwordHelper: { hash } } = require('../../helpers');
 const {
+    logActionsEnum: {
+        AVATAR_CHANGED,
+        REGISTRATION,
+        REGISTRATION_WITH_AVATAR,
+        REGISTRATION_WITHOUT_AVATAR,
+        USER_ADDED_CAR, USER_DELETED,
+        USER_DELETED_CAR,
+        USER_EDITED_DATA
+    },
     statusCodesEnum: { CREATED, NO_CONTENT },
     statusMessagesEnum: { CAR_ADDED_TO_USER, ENTITY_EDITED, ENTITY_CREATED }
 } = require('../../constants');
 const { transactionInstance } = require('../../dataBase').getInstance();
 
 module.exports = {
-    getUsersWithCars: (req, res, next) => {
+    getUsers: (req, res, next) => {
         try {
             res.json(req.message || req.users);
         } catch (e) {
@@ -49,6 +58,12 @@ module.exports = {
             }
 
             await emailService.sendMail(email, ACTIVATE_ACCOUNT, { userName: name });
+            await logService.createLog({
+                action: REGISTRATION,
+                comment: avatar ? REGISTRATION_WITH_AVATAR : REGISTRATION_WITHOUT_AVATAR,
+                user_id: id
+            });
+
             await transaction.commit();
 
             res.status(CREATED).json(ENTITY_CREATED);
@@ -67,6 +82,11 @@ module.exports = {
             } = req;
 
             await userService.addCarToUser({ car_id, user_id });
+            await logService.createLog({
+                action: USER_ADDED_CAR,
+                car_id,
+                user_id
+            });
 
             res.json(CAR_ADDED_TO_USER);
         } catch (e) {
@@ -87,6 +107,11 @@ module.exports = {
             }
 
             await userService.editUserById(userId, req.body);
+            await logService.createLog({
+                action: USER_EDITED_DATA,
+                comment: avatar && AVATAR_CHANGED,
+                user_id: userId
+            });
 
             res.status(CREATED).json(ENTITY_EDITED);
         } catch (e) {
@@ -105,8 +130,13 @@ module.exports = {
 
             await userService.deleteUserById(userId, transaction);
             await emailService.sendMail(email, RESTORE_ACCOUNT, { userName: name });
+            await logService.createLog({
+                action: USER_DELETED,
+                user_id: userId
+            });
 
             await fs.rmdir(path.join(process.cwd(), PUBLIC, USERS, userId), { recursive: true });
+
             await transaction.commit();
 
             res.sendStatus(NO_CONTENT);
@@ -122,6 +152,11 @@ module.exports = {
             const { userId: user_id, carId: car_id } = req.params;
 
             await userService.deleteCarFromUser(user_id, car_id);
+            await logService.createLog({
+                action: USER_DELETED_CAR,
+                car_id,
+                user_id
+            });
 
             res.sendStatus(NO_CONTENT);
         } catch (e) {

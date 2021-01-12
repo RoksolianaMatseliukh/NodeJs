@@ -1,4 +1,4 @@
-const { commonValidators: { numericalFieldValidator } } = require('../../validators');
+const { commonValidators: { idValidator } } = require('../../validators');
 const { ErrorHandler } = require('../../errors');
 const { statusCodesEnum: { BAD_REQUEST } } = require('../../constants');
 
@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
 
         const idChecker = (id) => {
             if (id) {
-                const { error } = numericalFieldValidator.validate(id);
+                const { error } = idValidator.validate(id);
 
                 if (error) {
                     const [{ message }] = error.details;
