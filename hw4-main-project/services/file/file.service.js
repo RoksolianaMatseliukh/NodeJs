@@ -5,6 +5,8 @@ module.exports = {
     createCarFile: (file, transaction) => {
         const CarFileModel = db.getModel(CAR_FILE);
 
-        return CarFileModel.create(file, { transaction });
+        return CarFileModel.create(file, {
+            transaction
+        });
     }
 };

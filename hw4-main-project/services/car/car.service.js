@@ -21,7 +21,9 @@ module.exports = {
     createCar: (car, transaction) => {
         const CarModel = db.getModel(CAR);
 
-        return CarModel.create(car, { transaction });
+        return CarModel.create(car, {
+            transaction
+        });
     },
 
     editCarById: async (id, editedCar, transaction) => {

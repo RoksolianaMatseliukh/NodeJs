@@ -1,4 +1,6 @@
 module.exports = {
     // morgan format
-    DEV: 'dev'
+    DEV: 'dev',
+    // mogoose error
+    ERROR: 'error'
 };

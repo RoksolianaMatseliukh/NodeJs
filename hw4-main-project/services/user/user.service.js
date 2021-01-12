@@ -100,7 +100,9 @@ module.exports = {
     createUser: (user, transaction) => {
         const UserModel = db.getModel(USER);
 
-        return UserModel.create(user, { transaction });
+        return UserModel.create(user, {
+            transaction
+        });
     },
 
     addCarToUser: async (car_user_ids) => {

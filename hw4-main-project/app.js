@@ -1,5 +1,6 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
+const mongoose = require('mongoose');
 const morgan = require('morgan');
 const path = require('path');
 
@@ -10,7 +11,8 @@ const { appConfigs: { PORT } } = require('./configs');
 const cronRun = require('./cron-jobs');
 const db = require('./dataBase').getInstance();
 const {
-    appSettingsEnum: { DEV },
+    appSettingsEnum: { DEV, ERROR },
+    dataBaseEnum: { DATABASE_NAME, MONGOOSE_LOCALHOST },
     folderNamesEnum: { PUBLIC },
     statusCodesEnum: { INTERNAL_SERVER_ERROR }
 } = require('./constants');
@@ -18,6 +20,7 @@ const {
 const app = express();
 
 db.setModels();
+_mongoConnection();
 
 app.use(fileUpload());
 app.use(express.json());
@@ -43,3 +46,12 @@ app.listen(PORT, () => {
     console.log(`app ${PORT} in process`);
     cronRun();
 });
+
+function _mongoConnection() {
+    const mongo = mongoose.connect(`${MONGOOSE_LOCALHOST}${DATABASE_NAME}`, { useNewUrlParser: true });
+    const connect = mongo.connection;
+
+    connect.on(ERROR, (error) => {
+        console.log(error);
+    });
+}

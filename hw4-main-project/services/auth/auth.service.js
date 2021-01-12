@@ -5,7 +5,9 @@ module.exports = {
     createTokenPair: async (token_pair, transaction) => {
         const OAuthModel = db.getModel(OAUTH);
 
-        await OAuthModel.create(token_pair, { transaction });
+        await OAuthModel.create(token_pair, {
+            transaction
+        });
     },
 
     getUserWithTokenByParams: (params) => {

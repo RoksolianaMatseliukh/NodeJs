@@ -20,5 +20,8 @@ module.exports = {
         foreignKey: 'user_id',
         onDelete: 'cascade',
         onUpdate: 'cascade'
-    }
+    },
+
+    // mongoose connection
+    MONGOOSE_LOCALHOST: 'mongodb://localhost:27017/'
 };
