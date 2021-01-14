@@ -4,7 +4,7 @@ const path = require('path');
 const { carService } = require('../../services');
 const { fileHelper } = require('../../helpers');
 const {
-    folderNamesEnum: {
+    folderFileNamesEnum: {
         CARS, DOCS, IMAGES, PUBLIC
     }
 } = require('../../constants');

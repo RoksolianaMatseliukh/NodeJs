@@ -1,6 +1,5 @@
 module.exports = {
-    checkCarFiles: require('./check-car-files'),
+    checkFileExtensions: require('./check-file-extensions'),
     checkNumberOfCarFiles: require('./check-number-of-car-files'),
-    checkNumberOfUserAvatar: require('./check-number-of-user-avatar'),
-    checkUserFiles: require('./check-user-files')
+    checkNumberOfUserAvatar: require('./check-number-of-user-avatar')
 };

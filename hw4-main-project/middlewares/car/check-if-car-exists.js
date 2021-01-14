@@ -1,20 +1,11 @@
 const { carService } = require('../../services');
-const { commonValidators: { idValidator } } = require('../../validators');
 const { ErrorHandler, customErrors: { ENTITY_NOT_FOUND } } = require('../../errors');
-const { statusCodesEnum: { BAD_REQUEST } } = require('../../constants');
 
 module.exports = async (req, res, next) => {
     try {
         const { car_id } = req.body;
 
-        const { error } = idValidator.validate(+car_id);
-
-        if (error) {
-            const [{ message }] = error.details;
-            throw new ErrorHandler(message, BAD_REQUEST);
-        }
-
-        const foundCar = await carService.getCarById(+car_id);
+        const foundCar = await carService.getCarById(car_id);
 
         if (!foundCar) {
             throw new ErrorHandler(

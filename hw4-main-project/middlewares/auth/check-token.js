@@ -1,21 +1,20 @@
 const jwt = require('jsonwebtoken');
 
-const { appConfigs: { ACCESS_TOKEN_SECRET } } = require('../../configs');
 const { authService } = require('../../services');
 const {
     ErrorHandler, customErrors: {
         NO_TOKEN, NOT_VALID_TOKEN, PERMISSION_DENIED
     }
 } = require('../../errors');
-const { JWTEnum: { AUTHORIZATION } } = require('../../constants');
+const { JWTEnum: { AUTHORIZATION, ACCESS_TOKEN } } = require('../../constants');
 
-module.exports = async (req, res, next) => {
+module.exports = (token_name, token_secret) => async (req, res, next) => {
     try {
         const { userId } = req.params;
 
-        const access_token = req.get(AUTHORIZATION);
+        const token = req.get(AUTHORIZATION);
 
-        if (!access_token) {
+        if (!token) {
             throw new ErrorHandler(
                 NO_TOKEN.message,
                 NO_TOKEN.code,
@@ -23,7 +22,7 @@ module.exports = async (req, res, next) => {
             );
         }
 
-        jwt.verify(access_token, ACCESS_TOKEN_SECRET, (err) => {
+        jwt.verify(token, token_secret, (err) => {
             if (err) {
                 throw new ErrorHandler(
                     NOT_VALID_TOKEN.message,
@@ -33,7 +32,7 @@ module.exports = async (req, res, next) => {
             }
         });
 
-        const userWithToken = await authService.getUserWithTokenByParams({ access_token });
+        const userWithToken = await authService.getUserWithTokenByParams({ [token_name]: token });
 
         if (!userWithToken) {
             throw new ErrorHandler(
@@ -43,7 +42,7 @@ module.exports = async (req, res, next) => {
             );
         }
 
-        if (userId && userWithToken.id !== +userId) {
+        if (token_name === ACCESS_TOKEN && +userId !== userWithToken.id) {
             throw new ErrorHandler(
                 PERMISSION_DENIED.message,
                 PERMISSION_DENIED.code,

@@ -1,5 +1,4 @@
-const { statusMessagesEnum: { NO_ENTITY_FOUND } } = require('../../constants');
-const { tableAttributesEnum: { EMAIL, PASSWORD } } = require('../../constants');
+const { statusMessagesEnum: { NO_ENTITY_FOUND }, tableAttributesEnum: { EMAIL, PASSWORD } } = require('../../constants');
 const { userQueryBuilder } = require('../../helpers');
 const { userService } = require('../../services');
 

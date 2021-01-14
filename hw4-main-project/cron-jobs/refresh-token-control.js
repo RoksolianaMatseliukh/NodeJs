@@ -1,14 +1,22 @@
+const dayjs = require('dayjs');
 const { Sequelize: { Op } } = require('sequelize');
 
 const { authService } = require('../services');
-const { dateEnum: { FULL_CURRENT_TIME }, JWTEnum: { D10_IN_MS } } = require('../constants');
+const {
+    appSettingsEnum: { REFRESH_TOKEN_CONTROL_MSG },
+    dateEnum: { DAYS }, JWTEnum: { D10_FOR_CRON },
+    folderFileNamesEnum: { REFRESH_TOKEN_CONTROL }
+} = require('../constants');
+const winston = require('../logger');
+
+const logger = winston(REFRESH_TOKEN_CONTROL);
 
 module.exports = async () => {
     const numOfDeletedTokenPairs = await authService.deleteTokenPair({
         created_at: {
-            [Op.lte]: new Date(new Date() - D10_IN_MS)
+            [Op.lte]: dayjs().subtract(D10_FOR_CRON, DAYS).toISOString()
         }
     });
 
-    console.log(`on ${FULL_CURRENT_TIME} was deleted - ${numOfDeletedTokenPairs} token pairs`);
+    logger.info(`${numOfDeletedTokenPairs} ${REFRESH_TOKEN_CONTROL_MSG}`);
 };

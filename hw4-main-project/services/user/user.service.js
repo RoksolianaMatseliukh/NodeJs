@@ -142,9 +142,11 @@ module.exports = {
         });
     },
 
-    getNumberOfUsers: () => {
+    getNumberOfUsers: (params) => {
         const UserModel = db.getModel(USER);
 
-        return UserModel.count();
+        return UserModel.count({
+            where: params
+        });
     }
 };

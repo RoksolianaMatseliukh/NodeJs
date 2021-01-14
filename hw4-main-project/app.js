@@ -8,16 +8,18 @@ require('dotenv').config();
 
 const { apiRouter, notFoundRouter } = require('./routes');
 const { appConfigs: { PORT } } = require('./configs');
-const cronRun = require('./cron-jobs');
-const db = require('./dataBase').getInstance();
 const {
-    appSettingsEnum: { DEV, ERROR },
+    appSettingsEnum: { APP_IN_PROCESS, DEV, ERROR },
     dataBaseEnum: { DATABASE_NAME, MONGOOSE_LOCALHOST },
-    folderNamesEnum: { PUBLIC },
+    folderFileNamesEnum: { APP, PUBLIC },
     statusCodesEnum: { INTERNAL_SERVER_ERROR }
 } = require('./constants');
+const cronRun = require('./cron-jobs');
+const db = require('./dataBase').getInstance();
+const winston = require('./logger');
 
 const app = express();
+const logger = winston(APP);
 
 db.setModels();
 _mongoConnection();
@@ -34,6 +36,7 @@ app.use('/api', apiRouter);
 app.use('*', notFoundRouter);
 // eslint-disable-next-line no-unused-vars
 app.use('*', (err, req, res, next) => {
+    logger.error(err);
     res
         .status(err.code || INTERNAL_SERVER_ERROR)
         .json({
@@ -43,7 +46,7 @@ app.use('*', (err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`app ${PORT} in process`);
+    console.log(APP_IN_PROCESS);
     cronRun();
 });
 

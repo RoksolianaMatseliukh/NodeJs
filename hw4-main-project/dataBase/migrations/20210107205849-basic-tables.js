@@ -1,4 +1,4 @@
-const { dataBaseEnum: { ID }, tableNamesEnum: { CARS, USERS, USERS_WITH_CARS } } = require('../../constants');
+const { dateEnum: { NOW }, dataBaseEnum: { ID }, tableNamesEnum: { CARS, USERS, USERS_WITH_CARS } } = require('../../constants');
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
@@ -33,6 +33,11 @@ module.exports = {
             password: {
                 type: Sequelize.DataTypes.STRING,
                 allowNull: false
+            },
+
+            registered_at: {
+                type: Sequelize.DataTypes.DATE,
+                defaultValue: Sequelize.fn(NOW)
             }
         });
 

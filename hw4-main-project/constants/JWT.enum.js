@@ -1,6 +1,10 @@
 module.exports = {
     AUTHORIZATION: 'Authorization',
     D10: '10d',
-    D10_IN_MS: 10 * 1000 * 60 * 60 * 24,
-    M10: '10m'
+    D10_FOR_CRON: 10,
+    M10: '10m',
+
+    // token names
+    ACCESS_TOKEN: 'access_token',
+    REFRESH_TOKEN: 'refresh_token'
 };

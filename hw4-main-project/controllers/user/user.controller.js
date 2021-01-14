@@ -4,7 +4,7 @@ const path = require('path');
 const { emailActionsEnum: { ACTIVATE_ACCOUNT, RESTORE_ACCOUNT } } = require('../../constants');
 const { emailService, logService, userService } = require('../../services');
 const { fileHelper } = require('../../helpers');
-const { folderNamesEnum: { PUBLIC, USERS } } = require('../../constants');
+const { folderFileNamesEnum: { PUBLIC, USERS } } = require('../../constants');
 const { passwordHelper: { hash } } = require('../../helpers');
 const {
     logActionsEnum: {

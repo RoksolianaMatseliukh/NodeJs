@@ -8,6 +8,7 @@ const {
     }
 } = require('../../configs');
 const { ErrorHandler, customErrors: { WRONG_TEMPLATE_NAME } } = require('../../errors');
+const { folderFileNamesEnum: { EMAIL_TEMPLATES } } = require('../../constants');
 const templatesInfo = require('../../email-templates');
 
 const transporter = mailer.createTransport({
@@ -20,7 +21,7 @@ const transporter = mailer.createTransport({
 
 const emailTemplates = new EmailTemplates({
     views: {
-        root: path.join(process.cwd(), 'email-templates')
+        root: path.join(process.cwd(), EMAIL_TEMPLATES)
     }
 });
 
@@ -37,13 +38,14 @@ const sendMail = async (userMail, action, context) => {
         }
 
         const html = await emailTemplates.render(templateInfo.templateName, context);
-
-        return transporter.sendMail({
+        const mailOptions = {
             from: ROOT_EMAIL_FROM,
             to: userMail,
             subject: templateInfo.subject,
             html
-        });
+        };
+
+        return transporter.sendMail(mailOptions);
     } catch (e) {
         console.log(e);
     }

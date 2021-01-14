@@ -1,5 +1,5 @@
 const db = require('../../dataBase').getInstance();
-const { modelNamesEnum: { OAUTH, USER } } = require('../../constants');
+const { dataBaseEnum: { USER_ID }, modelNamesEnum: { OAUTH, USER } } = require('../../constants');
 
 module.exports = {
     createTokenPair: async (token_pair, transaction) => {
@@ -19,10 +19,20 @@ module.exports = {
         });
     },
 
-    deleteTokenPair: async (params, transaction) => {
+    getNumberOfTokensByDistinctUserId: (params) => {
         const OAuthModel = db.getModel(OAUTH);
 
-        await OAuthModel.destroy({
+        return OAuthModel.count({
+            where: params,
+            distinct: true,
+            col: USER_ID
+        });
+    },
+
+    deleteTokenPair: (params, transaction) => {
+        const OAuthModel = db.getModel(OAUTH);
+
+        return OAuthModel.destroy({
             where: params,
             transaction
         });

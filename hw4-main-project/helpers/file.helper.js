@@ -4,7 +4,7 @@ const uuid = require('uuid');
 
 const { fileService } = require('../services');
 const {
-    folderNamesEnum: {
+    folderFileNamesEnum: {
         AVATAR, CARS, PUBLIC, USERS
     }
 } = require('../constants');

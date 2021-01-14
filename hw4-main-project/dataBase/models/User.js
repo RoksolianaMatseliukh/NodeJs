@@ -1,4 +1,8 @@
-const { dataBaseEnum: { USER_ASSOCIATION }, modelNamesEnum: { USER }, tableNamesEnum: { USERS } } = require('../../constants');
+const {
+    dateEnum: { NOW },
+    dataBaseEnum: { USER_ASSOCIATION },
+    modelNamesEnum: { USER }, tableNamesEnum: { USERS }
+} = require('../../constants');
 
 module.exports = (client, DataTypes) => {
     const User = client.define(
@@ -34,6 +38,11 @@ module.exports = (client, DataTypes) => {
             password: {
                 type: DataTypes.STRING,
                 allowNull: false
+            },
+
+            registered_at: {
+                type: DataTypes.DATE,
+                defaultValue: client.fn(NOW)
             }
         },
         {

@@ -2,8 +2,15 @@ const { Router } = require('express');
 
 const { userController } = require('../../controllers');
 const {
-    authMiddlewares, carMiddlewares, fileMiddlewares, userMiddlewares
+    authMiddlewares, commonMiddlewares, carMiddlewares, fileMiddlewares, userMiddlewares
 } = require('../../middlewares');
+const {
+    carValidators: { addCarToUserValidator },
+    userValidators: { editUserValidator, newUserValidator }
+} = require('../../validators');
+
+const { appConfigs: { ACCESS_TOKEN_SECRET } } = require('../../configs');
+const { JWTEnum: { ACCESS_TOKEN } } = require('../../constants');
 
 const userRouter = Router();
 
@@ -11,23 +18,23 @@ userRouter.get('/',
     userMiddlewares.checkUserByQueries,
     userController.getUsers);
 userRouter.post('/',
-    userMiddlewares.checkIsUserValidToCreate,
-    fileMiddlewares.checkUserFiles,
+    commonMiddlewares.checkIsEntityValid(newUserValidator),
+    fileMiddlewares.checkFileExtensions,
     fileMiddlewares.checkNumberOfUserAvatar,
     userMiddlewares.checkIfUserAlreadyExists,
     userController.createUser);
 
 userRouter.get('/:userId',
-    userMiddlewares.checkIsIdValid,
+    commonMiddlewares.checkIsIdValid,
     userMiddlewares.checkUserByParams,
     userController.getUserById);
 
 userRouter.use('/:userId',
-    userMiddlewares.checkIsIdValid,
-    authMiddlewares.checkAccessToken);
+    commonMiddlewares.checkIsIdValid,
+    authMiddlewares.checkToken(ACCESS_TOKEN, ACCESS_TOKEN_SECRET));
 userRouter.put('/:userId',
-    userMiddlewares.checkIsUserValidToEdit,
-    fileMiddlewares.checkUserFiles,
+    commonMiddlewares.checkIsEntityValid(editUserValidator),
+    fileMiddlewares.checkFileExtensions,
     fileMiddlewares.checkNumberOfUserAvatar,
     userMiddlewares.checkIfUserAlreadyExists,
     userController.editUserById);
@@ -35,14 +42,14 @@ userRouter.delete('/:userId', userController.deleteUserById);
 
 // add car to user
 userRouter.post('/:userId',
-    carMiddlewares.checkIsCarValidToBeAddedToUser,
+    commonMiddlewares.checkIsEntityValid(addCarToUserValidator),
     carMiddlewares.checkIfCarExists,
     userMiddlewares.checkIfUserHaveSameCarToAdd,
     userController.addCarToUser);
 // delete car from user
 userRouter.delete('/:userId/:carId',
-    userMiddlewares.checkIsIdValid,
-    authMiddlewares.checkAccessToken,
+    commonMiddlewares.checkIsIdValid,
+    authMiddlewares.checkToken(ACCESS_TOKEN, ACCESS_TOKEN_SECRET),
     userMiddlewares.checkIfUserHaveSameCarToDelete,
     userController.deleteCarFromUser);
 
