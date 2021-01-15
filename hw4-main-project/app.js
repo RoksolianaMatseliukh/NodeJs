@@ -16,7 +16,7 @@ const {
 } = require('./constants');
 const cronRun = require('./cron-jobs');
 const db = require('./dataBase').getInstance();
-const { Sentry } = require('./errors');
+const { sentry } = require('./errors');
 const winston = require('./logger');
 
 const app = express();
@@ -30,19 +30,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(process.cwd(), PUBLIC)));
-app.use(Sentry.Handlers.requestHandler());
+app.use(sentry.Handlers.requestHandler());
 
 app.use(morgan(DEV));
 
 app.use('/api', apiRouter);
 app.use('*', notFoundRouter);
 
-app.use(Sentry.Handlers.errorHandler());
+app.use(sentry.Handlers.errorHandler());
 
 // eslint-disable-next-line no-unused-vars
 app.use('*', (err, req, res, next) => {
     logger.error(err);
-    Sentry.captureException(err);
+    sentry.captureException(err);
 
     res
         .status(err.code || INTERNAL_SERVER_ERROR)

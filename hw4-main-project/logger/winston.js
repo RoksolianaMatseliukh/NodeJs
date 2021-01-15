@@ -34,7 +34,7 @@ module.exports = (label) => {
         format: format.json({ space: 2 })
     };
 
-    const fileRefreshTokenControlOptions = {
+    const fileInfoOptions = {
         level: INFO,
         filename: path.join(process.cwd(), LOGS, INFORMATION, MONTH_TXT),
         format: format.combine(
@@ -54,7 +54,7 @@ module.exports = (label) => {
         transports: [
             new transports.Console(consoleOptions),
             new transports.File(fileErrorsOptions),
-            new transports.File(fileRefreshTokenControlOptions)
+            new transports.File(fileInfoOptions)
         ]
     });
 
